@@ -35,7 +35,9 @@ const App = () => {
       value={value}
       onChange={(value) => setValue(value)}
       options={options}
-      label='People'
+      label='Fruits'
+      oneSelectedLabel='One selected'
+      mulitpleSelectedLabel={`${value.length} fruits selected`}
     />
   )
 }
