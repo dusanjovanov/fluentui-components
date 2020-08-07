@@ -21,3 +21,13 @@
   flex: 1;
   width: 0;
 }
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  border: 1px solid #8a8886;
+}
+
+.selectAllContainer {
+  padding-left: 8px;
+}

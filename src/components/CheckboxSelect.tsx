@@ -3,7 +3,8 @@ import {
   SearchBox,
   Callout,
   DirectionalHint,
-  DefaultButton
+  DefaultButton,
+  Checkbox
 } from 'office-ui-fabric-react'
 import { Option as OptionType } from '../types'
 import { Option } from './Option'
@@ -53,6 +54,8 @@ export const CheckboxSelect = ({
   if (value.length > 1) {
     buttonText = mulitpleSelectedLabel || `${value.length} selected`
   }
+
+  const areAllSelected = value.length === options.length
 
   return (
     <div className={className} style={style}>
@@ -104,12 +107,31 @@ export const CheckboxSelect = ({
         onDismiss={() => setIsDropdownOpen(false)}
         hidden={!isDropdownOpen}
       >
-        <div className='search-container'>
+        <div className={'search-container' + ' ' + styles.searchContainer}>
+          <div className={styles.selectAllContainer}>
+            <Checkbox
+              className='checkbox'
+              checked={areAllSelected}
+              onChange={() => {
+                if (areAllSelected) {
+                  onChange([])
+                } else {
+                  onChange([...options])
+                }
+              }}
+            />
+          </div>
           <SearchBox
             className='search'
             value={search}
             onChange={(_, value) => setSearch(value || '')}
             placeholder={searchPlaceholder || 'Search options...'}
+            styles={{
+              root: {
+                flex: 1,
+                border: 0
+              }
+            }}
           />
         </div>
         <div className={'options-container' + ' ' + styles.optionsContainer}>
