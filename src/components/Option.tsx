@@ -19,7 +19,9 @@ export const Option = ({ option, isChecked, toggleOption }: OptionProps) => {
           toggleOption(checked || false)
         }}
       />
-      <div className='option-label'>{option.label}</div>
+      <div className={'option-label' + ' ' + styles.optionLabel}>
+        {option.label}
+      </div>
     </div>
   )
 }

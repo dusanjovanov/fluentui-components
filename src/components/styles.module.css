@@ -13,3 +13,11 @@
   overflow-y: auto;
   max-height: 300px;
 }
+
+.optionLabel {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  width: 0;
+}

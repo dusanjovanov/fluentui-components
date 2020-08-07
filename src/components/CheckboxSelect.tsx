@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, CSSProperties } from 'react'
 import {
   SearchBox,
   Callout,
@@ -17,6 +17,7 @@ export type CheckboxSelectProps = {
   oneSelectedLabel?: string
   mulitpleSelectedLabel?: string
   className?: string
+  style?: CSSProperties
 }
 
 export const CheckboxSelect = ({
@@ -26,7 +27,8 @@ export const CheckboxSelect = ({
   label = 'Select options',
   oneSelectedLabel,
   mulitpleSelectedLabel,
-  className
+  className,
+  style
 }: CheckboxSelectProps) => {
   const [search, setSearch] = useState('')
   const [shownOptions, setShownOptions] = useState(options)
@@ -51,7 +53,7 @@ export const CheckboxSelect = ({
   }
 
   return (
-    <div className={className}>
+    <div className={className} style={style}>
       <DefaultButton
         className='button'
         iconProps={{
@@ -80,7 +82,11 @@ export const CheckboxSelect = ({
         directionalHint={DirectionalHint.bottomLeftEdge}
         styles={{
           calloutMain: {
-            overflowY: 'hidden'
+            overflowY: 'hidden',
+            width: document
+              .querySelector('#fabricCheckboxSelectButton')
+              ?.getBoundingClientRect().width,
+            minWidth: 250
           }
         }}
         onDismiss={() => setIsDropdownOpen(false)}
@@ -91,13 +97,6 @@ export const CheckboxSelect = ({
             className='search'
             value={search}
             onChange={(_, value) => setSearch(value || '')}
-            styles={{
-              root: {
-                width: document
-                  .querySelector('#fabricCheckboxSelectButton')
-                  ?.getBoundingClientRect().width
-              }
-            }}
           />
         </div>
         <div className={'options-container' + ' ' + styles.optionsContainer}>

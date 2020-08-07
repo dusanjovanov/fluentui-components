@@ -7,7 +7,7 @@ import faker from 'faker'
 const options = Array(100)
   .fill(0)
   .map(() => ({
-    label: faker.name.firstName(),
+    label: faker.name.firstName() + ' ' + faker.name.lastName(),
     value: faker.random.uuid()
   }))
 
@@ -20,6 +20,9 @@ const App = () => {
       onChange={(value) => setValue(value)}
       options={options}
       label='People'
+      style={{
+        width: 200
+      }}
     />
   )
 }
