@@ -72,6 +72,16 @@ export const CheckboxSelect = ({
           },
           flexContainer: {
             flexDirection: 'row-reverse'
+          },
+          textContainer: {
+            display: 'flex'
+          },
+          label: {
+            overflow: 'hidden',
+            flex: 1,
+            width: 0,
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis'
           }
         }}
       />

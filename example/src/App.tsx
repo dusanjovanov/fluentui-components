@@ -21,7 +21,7 @@ const App = () => {
       options={options}
       label='People'
       style={{
-        width: 200
+        width: 150
       }}
     />
   )
