@@ -10,19 +10,37 @@
 npm install --save fabric-checkbox-select
 ```
 
+or
+
+```bash
+yarn add fabric-checkbox-select
+```
+
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import { CheckboxSelect, Option } from 'fabric-checkbox-select'
 
-import MyComponent from 'fabric-checkbox-select'
-import 'fabric-checkbox-select/dist/index.css'
+const options = [
+  { label: 'Apple', value: 'apple' },
+  { label: 'Orange', value: 'orange' }
+]
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+const App = () => {
+  const [value, setValue] = useState<Option[]>([])
+
+  return (
+    <CheckboxSelect
+      value={value}
+      onChange={(value) => setValue(value)}
+      options={options}
+      label='People'
+    />
+  )
 }
+
+export default App
 ```
 
 ## License
