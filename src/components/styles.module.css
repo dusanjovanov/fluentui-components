@@ -1,0 +1,15 @@
+.option {
+  height: 36px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+}
+
+.option:hover {
+  background-color: #f3f2f1;
+}
+
+.optionsContainer {
+  overflow-y: auto;
+  max-height: 300px;
+}

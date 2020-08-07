@@ -1,10 +1,7 @@
-import * as React from 'react'
-import styles from './styles.module.css'
+import { initializeIcons } from '@uifabric/icons'
+import { CheckboxSelect } from './components/CheckboxSelect'
+import { Option } from './types'
 
-interface Props {
-  text: string
-}
+initializeIcons()
 
-export const ExampleComponent = ({ text }: Props) => {
-  return <div className={styles.test}>Example Component: {text}</div>
-}
+export { CheckboxSelect, Option }
