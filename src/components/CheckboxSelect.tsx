@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-
 import {
   SearchBox,
   Callout,
@@ -95,7 +94,7 @@ export const CheckboxSelect = ({
             styles={{
               root: {
                 width: document
-                  .querySelector('#button')
+                  .querySelector('#fabricCheckboxSelectButton')
                   ?.getBoundingClientRect().width
               }
             }}
