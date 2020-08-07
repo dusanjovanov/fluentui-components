@@ -16,6 +16,7 @@ export type CheckboxSelectProps = {
   label?: string
   oneSelectedLabel?: string
   mulitpleSelectedLabel?: string
+  searchPlaceholder?: string
   className?: string
   style?: CSSProperties
 }
@@ -27,6 +28,7 @@ export const CheckboxSelect = ({
   label = 'Select options',
   oneSelectedLabel,
   mulitpleSelectedLabel,
+  searchPlaceholder,
   className,
   style
 }: CheckboxSelectProps) => {
@@ -107,6 +109,7 @@ export const CheckboxSelect = ({
             className='search'
             value={search}
             onChange={(_, value) => setSearch(value || '')}
+            placeholder={searchPlaceholder || 'Search options...'}
           />
         </div>
         <div className={'options-container' + ' ' + styles.optionsContainer}>
