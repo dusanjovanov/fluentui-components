@@ -61,6 +61,12 @@
     "dist"
   ],
   "dependencies": {
-    "office-ui-fabric-react": "^7.126.1"
+    "@types/react-virtualized": "^9.21.10",
+    "@types/styled-components": "^5.1.2",
+    "@types/tinycolor2": "^1.4.2",
+    "office-ui-fabric-react": "^7.126.1",
+    "react-virtualized": "^9.21.2",
+    "styled-components": "^5.1.1",
+    "tinycolor2": "^1.4.1"
   }
 }

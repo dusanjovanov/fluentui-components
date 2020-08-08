@@ -18,11 +18,16 @@
     "@types/node": "link:../node_modules/@types/node",
     "@types/react": "link:../node_modules/@types/react",
     "@types/react-dom": "link:../node_modules/@types/react-dom",
-    "fabric-checkbox-select": "link:..",
+    "@types/react-toast-notifications": "^2.4.0",
     "faker": "^4.1.0",
+    "fluentui-components": "link:..",
+    "moment": "^2.27.0",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
     "react-scripts": "link:../node_modules/react-scripts",
+    "react-toast-notifications": "^2.4.0",
+    "react-tooltip": "^4.2.8",
+    "styled-components": "^5.1.1",
     "typescript": "link:../node_modules/typescript"
   },
   "devDependencies": {

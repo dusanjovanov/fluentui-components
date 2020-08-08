@@ -1,14 +1,16 @@
-import React, { useState, useEffect, CSSProperties } from 'react'
 import {
-  SearchBox,
   Callout,
-  DirectionalHint,
+  Checkbox,
   DefaultButton,
-  Checkbox
+  DirectionalHint,
+  SearchBox
 } from 'office-ui-fabric-react'
-import { Option as OptionType } from '../types'
+import React, { CSSProperties, useContext, useEffect, useState } from 'react'
+import styled from 'styled-components'
+import { FluentComponentsContext } from '../../FluentComponentsContext'
 import { Option } from './Option'
-import styles from './styles.module.css'
+import { getCheckboxStyles } from './styles'
+import { OptionType } from './types'
 
 export type CheckboxSelectProps = {
   options: { value: any; label: string }[]
@@ -36,6 +38,7 @@ export const CheckboxSelect = ({
   const [search, setSearch] = useState('')
   const [shownOptions, setShownOptions] = useState(options)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const theme = useContext(FluentComponentsContext)
 
   useEffect(() => {
     setShownOptions(
@@ -73,7 +76,9 @@ export const CheckboxSelect = ({
         styles={{
           root: {
             width: '100%',
-            paddingRight: 5
+            paddingRight: 5,
+            background: theme.background,
+            color: theme.textColor
           },
           flexContainer: {
             flexDirection: 'row-reverse'
@@ -87,6 +92,22 @@ export const CheckboxSelect = ({
             width: 0,
             whiteSpace: 'nowrap',
             textOverflow: 'ellipsis'
+          },
+          rootChecked: {
+            backgroundColor: theme.hoverBackground,
+            color: theme.textColor
+          },
+          rootFocused: {
+            backgroundColor: theme.hoverBackground,
+            color: theme.textColor
+          },
+          rootHovered: {
+            backgroundColor: theme.hoverBackground,
+            color: theme.textColor
+          },
+          rootPressed: {
+            backgroundColor: theme.hoverBackground,
+            color: theme.textColor
           }
         }}
       />
@@ -107,8 +128,8 @@ export const CheckboxSelect = ({
         onDismiss={() => setIsDropdownOpen(false)}
         hidden={!isDropdownOpen}
       >
-        <div className={'search-container' + ' ' + styles.searchContainer}>
-          <div className={styles.selectAllContainer}>
+        <SearchContainer className='search-container'>
+          <SelectAllContainer>
             <Checkbox
               className='checkbox'
               checked={areAllSelected}
@@ -119,8 +140,9 @@ export const CheckboxSelect = ({
                   onChange([...options])
                 }
               }}
+              styles={getCheckboxStyles(theme)}
             />
-          </div>
+          </SelectAllContainer>
           <SearchBox
             className='search'
             value={search}
@@ -129,12 +151,37 @@ export const CheckboxSelect = ({
             styles={{
               root: {
                 flex: 1,
-                border: 0
+                border: 0,
+                backgroundColor: theme.background
+              },
+              field: {
+                color: theme.textColor,
+                selectors: {
+                  '&::-webkit-input-placeholder': {
+                    color: theme.textColor
+                  }
+                }
+              },
+              icon: {
+                color: theme.primary
+              },
+              clearButton: {
+                selectors: {
+                  '&:hover .ms-Button': {
+                    backgroundColor: theme.hoverBackground
+                  },
+                  '&:hover .ms-Button-icon': {
+                    color: theme.textColor
+                  },
+                  '.ms-Button-icon': {
+                    color: theme.textColor
+                  }
+                }
               }
             }}
           />
-        </div>
-        <div className={'options-container' + ' ' + styles.optionsContainer}>
+        </SearchContainer>
+        <OptionsContainer className='options-container'>
           {shownOptions.map((o) => {
             const _isChecked = !!value.find((_o) => _o.value === o.value)
             return (
@@ -149,11 +196,28 @@ export const CheckboxSelect = ({
                     onChange([...value, o])
                   }
                 }}
+                checkboxStyles={getCheckboxStyles(theme)}
               />
             )
           })}
-        </div>
+        </OptionsContainer>
       </Callout>
     </div>
   )
 }
+
+export const OptionsContainer = styled.div`
+  overflow-y: auto;
+  max-height: 300px;
+`
+
+export const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid #8a8886;
+  background-color: ${(p) => p.theme.background};
+`
+
+export const SelectAllContainer = styled.div`
+  padding-left: 8px;
+`

@@ -1,29 +1,27 @@
+import { FluentComponentsProvider } from 'fluentui-components'
+import 'fluentui-components/dist/index.css'
 import React, { useState } from 'react'
+import { DetailsListExample } from './DetailsListExample'
+import { CheckboxSelectExample } from './CheckboxSelectExample'
+import { Toggle } from 'office-ui-fabric-react'
 
-import { CheckboxSelect, Option } from 'fabric-checkbox-select'
-import 'fabric-checkbox-select/dist/index.css'
-import faker from 'faker'
+const lightTheme = { background: '#fff', primary: '#005aa1', textColor: '#000' }
 
-const options = Array(100)
-  .fill(0)
-  .map(() => ({
-    label: faker.name.firstName() + ' ' + faker.name.lastName(),
-    value: faker.random.uuid()
-  }))
+const darkTheme = { background: '#333', primary: '#005aa1', textColor: '#fff' }
 
 const App = () => {
-  const [value, setValue] = useState<Option[]>([])
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
   return (
-    <CheckboxSelect
-      value={value}
-      onChange={(value) => setValue(value)}
-      options={options}
-      label='People'
-      style={{
-        width: 150
-      }}
-    />
+    <FluentComponentsProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <Toggle
+        label='Dark mode'
+        onChange={() => setIsDarkMode(!isDarkMode)}
+        checked={isDarkMode}
+      />
+      <CheckboxSelectExample />
+      <DetailsListExample />
+    </FluentComponentsProvider>
   )
 }
 
