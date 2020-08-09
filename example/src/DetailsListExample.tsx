@@ -7,7 +7,7 @@ import ReactTooltip from 'react-tooltip'
 import { createPortal } from 'react-dom'
 import moment from 'moment'
 import { useToasts } from 'react-toast-notifications'
-import { Icon } from 'office-ui-fabric-react'
+import { Icon, Slider } from 'office-ui-fabric-react'
 
 const getCols = (
   rows: any[],
@@ -318,31 +318,36 @@ export const DetailsListExample = () => {
       <div style={{ height: headerHeight, paddingBottom: 20 }}>
         <h1>DetailsList</h1>
         <Controls>
-          <div>
-            <div>Width: {width}</div>
-            <input
-              type='range'
-              value={width}
-              min={300}
-              max={windowWidth}
-              onChange={(e) => {
-                setWidth(+e.target.value)
-              }}
-            />
-          </div>
-          <div>
-            <div>Fixed columns: {fixedCols}</div>
-            <input
-              type='range'
-              value={fixedCols}
-              min={0}
-              step={1}
-              max={cols.length}
-              onChange={(e) => {
-                setFixedCols(+e.target.value)
-              }}
-            />
-          </div>
+          <Slider
+            value={width}
+            step={10}
+            min={300}
+            max={windowWidth}
+            onChange={(value) => {
+              setWidth(value)
+            }}
+            label={`Width`}
+            styles={{
+              root: {
+                flexBasis: 200
+              }
+            }}
+          />
+          <Slider
+            value={fixedCols}
+            min={0}
+            step={1}
+            max={cols.length}
+            onChange={(value) => {
+              setFixedCols(value)
+            }}
+            label={`Fixed columns`}
+            styles={{
+              root: {
+                flexBasis: 200
+              }
+            }}
+          />
         </Controls>
       </div>
       <DetailsList

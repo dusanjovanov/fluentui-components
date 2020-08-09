@@ -55,15 +55,18 @@ const Root = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: ${(p) => p.theme.textColorLight};
   font-size: 12px;
   border-bottom: 1px solid #f3f2f1;
-  background-color: ${(p) => p.theme.background};
+  &.even {
+    background-color: ${(p) => p.theme.detailsList.evenRow.background};
+    color: ${(p) => p.theme.detailsList.evenRow.text};
+  }
   &.odd {
-    background-color: ${(p) => p.theme.detailsListOddBackground};
+    background-color: ${(p) => p.theme.detailsList.oddRow.background};
+    color: ${(p) => p.theme.detailsList.oddRow.text};
   }
   &.hover {
-    background-color: ${(p) => p.theme.primaryLight};
-    color: #000;
+    background-color: ${(p) => p.theme.detailsList.hoverRow.background};
+    color: ${(p) => p.theme.detailsList.hoverRow.text};
   }
 `

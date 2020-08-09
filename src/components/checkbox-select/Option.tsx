@@ -48,5 +48,5 @@ const Label = styled.div`
   text-overflow: ellipsis;
   flex: 1;
   width: 0;
-  color: ${(p) => p.theme.textColor};
+  color: ${(p) => p.theme.text};
 `

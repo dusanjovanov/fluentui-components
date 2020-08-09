@@ -79,7 +79,7 @@ const Root = styled.div`
   border-bottom: 1px solid rgb(237, 235, 233);
   user-select: none;
   background-color: ${(p) => p.theme.background};
-  color: ${(p) => p.theme.textColor};
+  color: ${(p) => p.theme.text};
   &:hover {
     background-color: ${(p) => p.theme.hoverBackground};
   }
@@ -99,7 +99,7 @@ const Label = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  color: ${(p) => p.theme.textColor};
+  color: ${(p) => p.theme.text};
 `
 
 const StyledIcon = styled(Icon)`

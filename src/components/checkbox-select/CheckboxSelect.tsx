@@ -78,7 +78,7 @@ export const CheckboxSelect = ({
             width: '100%',
             paddingRight: 5,
             background: theme.background,
-            color: theme.textColor
+            color: theme.text
           },
           flexContainer: {
             flexDirection: 'row-reverse'
@@ -95,19 +95,19 @@ export const CheckboxSelect = ({
           },
           rootChecked: {
             backgroundColor: theme.hoverBackground,
-            color: theme.textColor
+            color: theme.text
           },
           rootFocused: {
             backgroundColor: theme.hoverBackground,
-            color: theme.textColor
+            color: theme.text
           },
           rootHovered: {
             backgroundColor: theme.hoverBackground,
-            color: theme.textColor
+            color: theme.text
           },
           rootPressed: {
             backgroundColor: theme.hoverBackground,
-            color: theme.textColor
+            color: theme.text
           }
         }}
       />
@@ -155,10 +155,10 @@ export const CheckboxSelect = ({
                 backgroundColor: theme.background
               },
               field: {
-                color: theme.textColor,
+                color: theme.text,
                 selectors: {
                   '&::-webkit-input-placeholder': {
-                    color: theme.textColor
+                    color: theme.text
                   }
                 }
               },
@@ -171,10 +171,10 @@ export const CheckboxSelect = ({
                     backgroundColor: theme.hoverBackground
                   },
                   '&:hover .ms-Button-icon': {
-                    color: theme.textColor
+                    color: theme.text
                   },
                   '.ms-Button-icon': {
-                    color: theme.textColor
+                    color: theme.text
                   }
                 }
               }

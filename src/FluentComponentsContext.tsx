@@ -1,19 +1,33 @@
-import React, { createContext, ReactNode, useEffect } from 'react'
-import tinycolor from 'tinycolor2'
+import React, { createContext, ReactNode } from 'react'
 import { ThemeProvider } from 'styled-components'
-import { loadTheme } from 'office-ui-fabric-react'
-// import { loadTheme } from 'office-ui-fabric-react'
+import tinycolor from 'tinycolor2'
 
 export const FluentComponentsContext = createContext({} as ThemeExpanded)
 
-type Theme = { background: string; primary: string; textColor: string }
+type Theme = {
+  background?: string
+  primary?: string
+  text?: string
+  detailsList?: {
+    oddRow?: {
+      background?: string
+      text?: string
+    }
+    evenRow?: {
+      background?: string
+      text?: string
+    }
+    hoverRow?: {
+      background?: string
+      text?: string
+    }
+  }
+}
 
 export type ThemeExpanded = Theme & {
   hoverBackground: string
   primaryDark: string
-  primaryLight: string
-  textColorLight: string
-  detailsListOddBackground: string
+  // textLight: string
 }
 
 type Props = {
@@ -26,30 +40,30 @@ window.tinycolor = tinycolor
 export const FluentComponentsProvider = ({ children, theme }: Props) => {
   const tinyColorBackground = tinycolor(theme.background)
   const tinyColorPrimary = tinycolor(theme.primary)
-  const tinyColorText = tinycolor(theme.textColor)
+  // const tinyColorText = tinycolor(theme.text)
+  const hoverBackground = tinyColorBackground.isDark()
+    ? tinyColorBackground.lighten().toHexString()
+    : tinyColorBackground.darken().toHexString()
 
   const value: ThemeExpanded = {
     ...theme,
-    hoverBackground: tinyColorBackground.isDark()
-      ? tinyColorBackground.lighten().toHexString()
-      : tinyColorBackground.darken().toHexString(),
+    hoverBackground,
     primaryDark: tinyColorPrimary.darken().toHexString(),
-    primaryLight: tinyColorPrimary.lighten(40).toHexString(),
-    textColorLight: tinyColorText.lighten().toHexString(),
-    detailsListOddBackground: tinyColorBackground.lighten(5).toHexString()
-  }
-
-  useEffect(() => {
-    loadTheme({
-      palette: {
-        themePrimary: value.primary,
-        themeDark: tinyColorPrimary.darken(1).toHexString()
-        // neutralPrimary: 'white',
-        // neutralDark: 'red',
-        // neutralLight: 'yellow'
+    detailsList: {
+      evenRow: {
+        background: theme.detailsList?.evenRow?.background || theme.background,
+        text: theme.detailsList?.evenRow?.text || theme.text
+      },
+      oddRow: {
+        background: theme.detailsList?.oddRow?.background || theme.background,
+        text: theme.detailsList?.oddRow?.text || theme.text
+      },
+      hoverRow: {
+        background: theme.detailsList?.hoverRow?.background || hoverBackground,
+        text: theme.detailsList?.hoverRow?.text || theme.text
       }
-    })
-  }, [value])
+    }
+  }
 
   return (
     <FluentComponentsContext.Provider value={value}>

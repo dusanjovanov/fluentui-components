@@ -1,19 +1,21 @@
 import { FluentComponentsProvider } from 'fluentui-components'
 import 'fluentui-components/dist/index.css'
-import React, { useState } from 'react'
-import { DetailsListExample } from './DetailsListExample'
-import { CheckboxSelectExample } from './CheckboxSelectExample'
 import { Toggle } from 'office-ui-fabric-react'
+import React, { useState } from 'react'
+import { CheckboxSelectExample } from './CheckboxSelectExample'
+import { DetailsListExample } from './DetailsListExample'
 
-const lightTheme = { background: '#fff', primary: '#005aa1', textColor: '#000' }
+const lightTheme = { background: '#fff', primary: '#005aa1', text: '#000' }
 
-const darkTheme = { background: '#333', primary: '#005aa1', textColor: '#fff' }
+const darkTheme = { background: '#333', primary: '#005aa1', text: '#fff' }
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false)
 
+  const theme = isDarkMode ? darkTheme : lightTheme
+
   return (
-    <FluentComponentsProvider theme={isDarkMode ? darkTheme : lightTheme}>
+    <FluentComponentsProvider theme={theme}>
       <Toggle
         label='Dark mode'
         onChange={() => setIsDarkMode(!isDarkMode)}
