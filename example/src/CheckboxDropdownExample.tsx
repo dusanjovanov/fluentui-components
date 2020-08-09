@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { CheckboxSelect, OptionType } from 'fluentui-components'
+import { CheckboxDropdown, OptionType } from 'fluentui-components'
 import faker from 'faker'
 import styled from 'styled-components'
 
@@ -10,13 +10,13 @@ const options = Array(100)
     value: faker.random.uuid()
   }))
 
-export const CheckboxSelectExample = () => {
+export const CheckboxDropdownExample = () => {
   const [value, setValue] = useState<OptionType[]>([])
 
   return (
     <Root>
-      <h1>CheckboxSelect</h1>
-      <CheckboxSelect
+      <h1>CheckboxDropdown</h1>
+      <CheckboxDropdown
         value={value}
         onChange={(value) => setValue(value)}
         options={options}

@@ -1,20 +1,21 @@
 import { initializeIcons } from '@uifabric/icons'
-import { CheckboxSelect } from './components/checkbox-select/CheckboxSelect'
+import { CheckboxDropdown } from './components/checkbox-select/CheckboxDropdown'
 import { OptionType } from './components/checkbox-select/types'
 import { DetailsList } from './components/details-list/DetailsList'
 import {
   DetailsListColumn,
   DetailsListSortProp
 } from './components/details-list/types'
-import { FluentComponentsProvider } from './FluentComponentsContext'
+import { FluentComponentsProvider, Theme } from './FluentComponentsContext'
 
 initializeIcons()
 
 export {
-  CheckboxSelect,
+  CheckboxDropdown,
   OptionType,
   DetailsList,
   DetailsListColumn,
   DetailsListSortProp,
-  FluentComponentsProvider
+  FluentComponentsProvider,
+  Theme
 }

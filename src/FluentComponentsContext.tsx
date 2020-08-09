@@ -3,7 +3,7 @@ import tinycolor from 'tinycolor2'
 
 export const FluentComponentsContext = createContext({} as ThemeExpanded)
 
-type Theme = {
+export type Theme = {
   background?: string
   primary?: string
   text?: string

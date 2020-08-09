@@ -13,7 +13,7 @@ import { Option } from './Option'
 import { getCheckboxStyles } from './styles'
 import { OptionType } from './types'
 
-export type CheckboxSelectProps = {
+export type CheckboxDropdownProps = {
   options: { value: any; label: string }[]
   value: OptionType[]
   onChange: (value: OptionType[]) => void
@@ -25,7 +25,7 @@ export type CheckboxSelectProps = {
   style?: CSSProperties
 }
 
-export const CheckboxSelect = ({
+export const CheckboxDropdown = ({
   options,
   value,
   onChange,
@@ -35,7 +35,7 @@ export const CheckboxSelect = ({
   searchPlaceholder,
   className,
   style
-}: CheckboxSelectProps) => {
+}: CheckboxDropdownProps) => {
   const [search, setSearch] = useState('')
   const [shownOptions, setShownOptions] = useState(options)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)

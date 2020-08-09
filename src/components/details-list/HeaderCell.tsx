@@ -70,6 +70,9 @@ export const HeaderCell = ({
       onClick={() => {
         onClick && onClick(col)
       }}
+      className='header-cell'
+      data-columnindex={columnIndex}
+      data-columnkey={col.key}
     >
       {headerContent}
     </Root>

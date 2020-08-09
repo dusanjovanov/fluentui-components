@@ -25,7 +25,7 @@ export const Cell = ({
   style: _style,
   ...props
 }: Props) => {
-  const { rowIndex, style } = cellProps
+  const { rowIndex, columnIndex, style } = cellProps
   return (
     <Root
       fabricTheme={fabricTheme}
@@ -43,8 +43,10 @@ export const Cell = ({
         ...style,
         textAlign: col.align ? col.align : 'left'
       }}
-      className={(rowIndex % 2 !== 0 ? 'odd' : 'even') + ' ' + className}
+      className={((rowIndex - 1) % 2 !== 0 ? 'odd' : 'even') + ' cell'}
+      data-columnindex={columnIndex}
       data-rowindex={rowIndex}
+      data-columnkey={col.key}
       {...props}
     >
       {children}
@@ -53,7 +55,10 @@ export const Cell = ({
 }
 
 export const DefaultCell = styled.div`
-  padding: 11px 12px 11px 12px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  height: 100%;
 `
 
 const Root = styled.div<StyledComponentProps>`

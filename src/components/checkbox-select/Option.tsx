@@ -30,7 +30,7 @@ export const Option = ({
         }}
         styles={checkboxStyles}
       />
-      <Label className='option-label' fabricTheme={fabricTheme}>
+      <Label className='label' fabricTheme={fabricTheme}>
         {option.label}
       </Label>
     </Root>
