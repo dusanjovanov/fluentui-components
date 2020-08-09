@@ -8,6 +8,7 @@ import {
 import React, { CSSProperties, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FluentComponentsContext } from '../../FluentComponentsContext'
+import { StyledComponentProps } from '../../types'
 import { Option } from './Option'
 import { getCheckboxStyles } from './styles'
 import { OptionType } from './types'
@@ -128,7 +129,7 @@ export const CheckboxSelect = ({
         onDismiss={() => setIsDropdownOpen(false)}
         hidden={!isDropdownOpen}
       >
-        <SearchContainer className='search-container'>
+        <SearchContainer className='search-container' fabricTheme={theme}>
           <SelectAllContainer>
             <Checkbox
               className='checkbox'
@@ -197,6 +198,7 @@ export const CheckboxSelect = ({
                   }
                 }}
                 checkboxStyles={getCheckboxStyles(theme)}
+                fabricTheme={theme}
               />
             )
           })}
@@ -211,11 +213,11 @@ export const OptionsContainer = styled.div`
   max-height: 300px;
 `
 
-export const SearchContainer = styled.div`
+export const SearchContainer = styled.div<StyledComponentProps>`
   display: flex;
   align-items: center;
   border: 1px solid #8a8886;
-  background-color: ${(p) => p.theme.background};
+  background-color: ${(p) => p.fabricTheme.background};
 `
 
 export const SelectAllContainer = styled.div`

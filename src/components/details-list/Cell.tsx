@@ -1,7 +1,9 @@
 import React, { ReactNode } from 'react'
-import styled from 'styled-components'
 import { GridCellProps } from 'react-virtualized'
+import styled from 'styled-components'
+import { StyledComponentProps } from '../../types'
 import { DetailsListColumn } from './types'
+import { ThemeExpanded } from '../../FluentComponentsContext'
 
 type Props = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -10,6 +12,7 @@ type Props = React.DetailedHTMLProps<
   cellProps: GridCellProps
   children: ReactNode
   col: DetailsListColumn
+  fabricTheme: ThemeExpanded
 }
 
 export const Cell = ({
@@ -18,12 +21,14 @@ export const Cell = ({
   className,
   col,
   ref,
+  fabricTheme,
   style: _style,
   ...props
 }: Props) => {
   const { rowIndex, style } = cellProps
   return (
     <Root
+      fabricTheme={fabricTheme}
       onMouseOver={() => {
         document
           .querySelectorAll('.hover')
@@ -51,22 +56,23 @@ export const DefaultCell = styled.div`
   padding: 11px 12px 11px 12px;
 `
 
-const Root = styled.div`
+const Root = styled.div<StyledComponentProps>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 12px;
   border-bottom: 1px solid #f3f2f1;
+  box-sizing: border-box;
   &.even {
-    background-color: ${(p) => p.theme.detailsList.evenRow.background};
-    color: ${(p) => p.theme.detailsList.evenRow.text};
+    background-color: ${(p) => p.fabricTheme.detailsList.evenRow.background};
+    color: ${(p) => p.fabricTheme.detailsList.evenRow.text};
   }
   &.odd {
-    background-color: ${(p) => p.theme.detailsList.oddRow.background};
-    color: ${(p) => p.theme.detailsList.oddRow.text};
+    background-color: ${(p) => p.fabricTheme.detailsList.oddRow.background};
+    color: ${(p) => p.fabricTheme.detailsList.oddRow.text};
   }
   &.hover {
-    background-color: ${(p) => p.theme.detailsList.hoverRow.background};
-    color: ${(p) => p.theme.detailsList.hoverRow.text};
+    background-color: ${(p) => p.fabricTheme.detailsList.hoverRow.background};
+    color: ${(p) => p.fabricTheme.detailsList.hoverRow.text};
   }
 `

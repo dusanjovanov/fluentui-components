@@ -1,5 +1,4 @@
 import React, { createContext, ReactNode } from 'react'
-import { ThemeProvider } from 'styled-components'
 import tinycolor from 'tinycolor2'
 
 export const FluentComponentsContext = createContext({} as ThemeExpanded)
@@ -28,6 +27,20 @@ export type ThemeExpanded = Theme & {
   hoverBackground: string
   primaryDark: string
   // textLight: string
+  detailsList: {
+    oddRow: {
+      background: string
+      text: string
+    }
+    evenRow: {
+      background: string
+      text: string
+    }
+    hoverRow: {
+      background: string
+      text: string
+    }
+  }
 }
 
 type Props = {
@@ -40,10 +53,10 @@ window.tinycolor = tinycolor
 export const FluentComponentsProvider = ({ children, theme }: Props) => {
   const tinyColorBackground = tinycolor(theme.background)
   const tinyColorPrimary = tinycolor(theme.primary)
-  // const tinyColorText = tinycolor(theme.text)
+  // const tinyColorText = tinycolor(theme.fabric.text)
   const hoverBackground = tinyColorBackground.isDark()
-    ? tinyColorBackground.lighten().toHexString()
-    : tinyColorBackground.darken().toHexString()
+    ? tinyColorBackground.lighten(5).toHexString()
+    : tinyColorBackground.darken(5).toHexString()
 
   const value: ThemeExpanded = {
     ...theme,
@@ -51,23 +64,26 @@ export const FluentComponentsProvider = ({ children, theme }: Props) => {
     primaryDark: tinyColorPrimary.darken().toHexString(),
     detailsList: {
       evenRow: {
-        background: theme.detailsList?.evenRow?.background || theme.background,
-        text: theme.detailsList?.evenRow?.text || theme.text
+        background:
+          theme.detailsList?.evenRow?.background || theme.background || '#fff',
+        text: theme.detailsList?.evenRow?.text || theme.text || '#000'
       },
       oddRow: {
-        background: theme.detailsList?.oddRow?.background || theme.background,
-        text: theme.detailsList?.oddRow?.text || theme.text
+        background:
+          theme.detailsList?.oddRow?.background || theme.background || '#fff',
+        text: theme.detailsList?.oddRow?.text || theme.text || '#000'
       },
       hoverRow: {
-        background: theme.detailsList?.hoverRow?.background || hoverBackground,
-        text: theme.detailsList?.hoverRow?.text || theme.text
+        background:
+          theme.detailsList?.hoverRow?.background || hoverBackground || '#fff',
+        text: theme.detailsList?.hoverRow?.text || theme.text || '#000'
       }
     }
   }
 
   return (
     <FluentComponentsContext.Provider value={value}>
-      <ThemeProvider theme={value}>{children}</ThemeProvider>
+      {children}
     </FluentComponentsContext.Provider>
   )
 }

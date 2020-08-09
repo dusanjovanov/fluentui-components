@@ -2,6 +2,8 @@ import { Icon } from 'office-ui-fabric-react'
 import React, { ReactNode } from 'react'
 import { GridCellProps } from 'react-virtualized'
 import styled from 'styled-components'
+import { ThemeExpanded } from '../../FluentComponentsContext'
+import { StyledComponentProps } from '../../types'
 import { DetailsListColumn, DetailsListSortProp } from './types'
 
 type Props = {
@@ -10,6 +12,7 @@ type Props = {
   sort?: DetailsListSortProp
   isLoading: boolean
   onClick?: (col: DetailsListColumn) => void
+  fabricTheme: ThemeExpanded
 }
 
 export const HeaderCell = ({
@@ -17,11 +20,12 @@ export const HeaderCell = ({
   col,
   sort,
   isLoading,
-  onClick
+  onClick,
+  fabricTheme
 }: Props) => {
   const { style, columnIndex } = cellProps
 
-  let label: ReactNode = <Label>{col.label}</Label>
+  let label: ReactNode = <Label fabricTheme={fabricTheme}>{col.label}</Label>
 
   if (col.renderLabel) {
     label = col.renderLabel({ col, colIndex: columnIndex })
@@ -58,6 +62,7 @@ export const HeaderCell = ({
 
   return (
     <Root
+      fabricTheme={fabricTheme}
       style={{
         ...style,
         cursor: isLoading ? 'wait' : 'pointer'
@@ -71,17 +76,18 @@ export const HeaderCell = ({
   )
 }
 
-const Root = styled.div`
+const Root = styled.div<StyledComponentProps>`
   font-size: 14px;
   height: 100%;
   font-weight: 600;
   border-top: 1px solid rgb(237, 235, 233);
   border-bottom: 1px solid rgb(237, 235, 233);
   user-select: none;
-  background-color: ${(p) => p.theme.background};
-  color: ${(p) => p.theme.text};
+  background-color: ${(p) => p.fabricTheme.background};
+  color: ${(p) => p.fabricTheme.text};
+  box-sizing: border-box;
   &:hover {
-    background-color: ${(p) => p.theme.hoverBackground};
+    background-color: ${(p) => p.fabricTheme.hoverBackground};
   }
   &:focus {
     outline: none;
@@ -95,11 +101,11 @@ const DefaultCell = styled.div`
   height: 100%;
 `
 
-const Label = styled.div`
+const Label = styled.div<StyledComponentProps>`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  color: ${(p) => p.theme.text};
+  color: ${(p) => p.fabricTheme.text};
 `
 
 const StyledIcon = styled(Icon)`

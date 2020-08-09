@@ -2,22 +2,26 @@ import { Checkbox, ICheckboxStyles } from 'office-ui-fabric-react'
 import React from 'react'
 import styled from 'styled-components'
 import { OptionType } from './types'
+import { StyledComponentProps } from '../../types'
+import { ThemeExpanded } from '../../FluentComponentsContext'
 
 type OptionProps = {
   option: OptionType
   isChecked: boolean
   toggleOption: (isChecked: boolean) => void
   checkboxStyles: Partial<ICheckboxStyles>
+  fabricTheme: ThemeExpanded
 }
 
 export const Option = ({
   option,
   isChecked,
   toggleOption,
-  checkboxStyles
+  checkboxStyles,
+  fabricTheme
 }: OptionProps) => {
   return (
-    <Root className='option'>
+    <Root className='option' fabricTheme={fabricTheme}>
       <Checkbox
         className='checkbox'
         checked={isChecked}
@@ -26,27 +30,29 @@ export const Option = ({
         }}
         styles={checkboxStyles}
       />
-      <Label className='option-label'>{option.label}</Label>
+      <Label className='option-label' fabricTheme={fabricTheme}>
+        {option.label}
+      </Label>
     </Root>
   )
 }
 
-const Root = styled.div`
+const Root = styled.div<StyledComponentProps>`
   height: 36px;
   padding: 0 8px;
   display: flex;
   align-items: center;
-  background-color: ${(p) => p.theme.background};
+  background-color: ${(p) => p.fabricTheme.background};
   &:hover {
-    background-color: ${(p) => p.theme.hoverBackground};
+    background-color: ${(p) => p.fabricTheme.hoverBackground};
   }
 `
 
-const Label = styled.div`
+const Label = styled.div<StyledComponentProps>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   flex: 1;
   width: 0;
-  color: ${(p) => p.theme.text};
+  color: ${(p) => p.fabricTheme.text};
 `

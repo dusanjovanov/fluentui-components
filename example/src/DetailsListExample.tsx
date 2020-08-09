@@ -282,7 +282,7 @@ const initRows = Array(1000)
   })
 
 export const DetailsListExample = () => {
-  const { width: windowWidth, height: windowHeight } = useWindowSize()
+  const { width: windowWidth } = useWindowSize()
   const [rows, setRows] = useState(initRows)
   const [sort, setSort] = useState({ key: 'name', dir: 'asc' })
   const [width, setWidth] = useState(windowWidth)
@@ -367,7 +367,7 @@ export const DetailsListExample = () => {
         }}
         fixedColumnCount={fixedCols}
         cellRenderer={() => null}
-        height={windowHeight - headerHeight}
+        height={500}
         width={width}
         rowHeight={40}
         onSectionRendered={() => {

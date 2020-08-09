@@ -5,9 +5,13 @@ import React, { useState } from 'react'
 import { CheckboxSelectExample } from './CheckboxSelectExample'
 import { DetailsListExample } from './DetailsListExample'
 
-const lightTheme = { background: '#fff', primary: '#005aa1', text: '#000' }
+const lightTheme = {
+  background: '#fff',
+  primary: 'rebeccapurple',
+  text: '#000'
+}
 
-const darkTheme = { background: '#333', primary: '#005aa1', text: '#fff' }
+const darkTheme = { background: '#333', primary: 'rebeccapurple', text: '#fff' }
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false)

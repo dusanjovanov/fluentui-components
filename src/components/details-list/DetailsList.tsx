@@ -1,10 +1,11 @@
-import React, { ReactNode, useEffect, useRef } from 'react'
+import React, { ReactNode, useContext, useEffect, useRef } from 'react'
 import {
   AutoSizer,
   GridCellRenderer,
   MultiGrid,
   MultiGridProps
 } from 'react-virtualized'
+import { FluentComponentsContext } from '../../FluentComponentsContext'
 import { Cell, DefaultCell } from './Cell'
 import { HeaderCell } from './HeaderCell'
 import { DetailsListColumn, DetailsListSortProp } from './types'
@@ -38,6 +39,7 @@ export const DetailsList = ({
   ...props
 }: Props) => {
   const refGrid = useRef<MultiGrid>(null)
+  const fabricTheme = useContext(FluentComponentsContext)
 
   useEffect(() => {
     if (!refGrid.current) return
@@ -53,6 +55,7 @@ export const DetailsList = ({
     if (rowIndex === 0) {
       return (
         <HeaderCell
+          fabricTheme={fabricTheme}
           key={key}
           cellProps={cellProps}
           col={col}
@@ -88,6 +91,7 @@ export const DetailsList = ({
       }
       return (
         <Cell
+          fabricTheme={fabricTheme}
           key={key}
           cellProps={cellProps}
           onClick={() => {
