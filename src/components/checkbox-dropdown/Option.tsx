@@ -1,8 +1,7 @@
 import { Checkbox, ICheckboxStyles } from 'office-ui-fabric-react'
 import React from 'react'
 import styled from 'styled-components'
-import { OptionType } from './types'
-import { StyledComponentProps } from '../../types'
+import { StyledComponentProps, OptionType } from '../../types'
 import { ThemeExpanded } from '../../FluentComponentsContext'
 
 type OptionProps = {

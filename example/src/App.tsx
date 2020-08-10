@@ -4,6 +4,7 @@ import { Toggle } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
 import { CheckboxDropdownExample } from './CheckboxDropdownExample'
 import { DetailsListExample } from './DetailsListExample'
+import { SearchableDropdownExample } from './SearchableDropdownExample'
 
 const lightTheme: Theme = {
   background: '#fff',
@@ -43,6 +44,7 @@ const App = () => {
         checked={isDarkMode}
       />
       <CheckboxDropdownExample />
+      <SearchableDropdownExample />
       <DetailsListExample />
     </FluentComponentsProvider>
   )

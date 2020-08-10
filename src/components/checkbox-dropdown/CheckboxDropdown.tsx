@@ -8,10 +8,9 @@ import {
 import React, { CSSProperties, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FluentComponentsContext } from '../../FluentComponentsContext'
-import { StyledComponentProps } from '../../types'
+import { StyledComponentProps, OptionType } from '../../types'
 import { Option } from './Option'
 import { getCheckboxStyles } from './styles'
-import { OptionType } from './types'
 
 export type CheckboxDropdownProps = {
   options: { value: any; label: string }[]
@@ -79,7 +78,8 @@ export const CheckboxDropdown = ({
             width: '100%',
             paddingRight: 5,
             background: theme.background,
-            color: theme.text
+            color: theme.text,
+            paddingLeft: 8
           },
           flexContainer: {
             flexDirection: 'row-reverse'
@@ -92,7 +92,9 @@ export const CheckboxDropdown = ({
             flex: 1,
             width: 0,
             whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis'
+            textOverflow: 'ellipsis',
+            textAlign: 'left',
+            fontWeight: 'normal'
           },
           rootChecked: {
             backgroundColor: theme.hoverBackground,
