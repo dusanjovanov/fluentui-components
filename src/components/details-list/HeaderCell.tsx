@@ -73,6 +73,7 @@ export const HeaderCell = ({
       className='header-cell'
       data-columnindex={columnIndex}
       data-columnkey={col.key}
+      data-issortable={col.isSortable === undefined ? 'false' : col.isSortable}
     >
       {headerContent}
     </Root>

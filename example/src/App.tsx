@@ -1,10 +1,10 @@
 import { FluentComponentsProvider, Theme } from 'fluentui-components'
-import 'fluentui-components/dist/index.css'
-import { Toggle } from 'office-ui-fabric-react'
+import { Toggle, Pivot, PivotItem } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
-import { CheckboxDropdownExample } from './CheckboxDropdownExample'
 import { DetailsListExample } from './DetailsListExample'
-import { SearchableDropdownExample } from './SearchableDropdownExample'
+import { FluentReactSelectAsyncExample } from './FluentReactSelectAsyncExample'
+import { FluentReactSelectExample } from './FluentReactSelectExample'
+import { InfiniteDetailsListExample } from './InfiniteDetailsListExample'
 
 const lightTheme: Theme = {
   background: '#fff',
@@ -43,9 +43,16 @@ const App = () => {
         onChange={() => setIsDarkMode(!isDarkMode)}
         checked={isDarkMode}
       />
-      <CheckboxDropdownExample />
-      <SearchableDropdownExample />
-      <DetailsListExample />
+      <FluentReactSelectExample />
+      <FluentReactSelectAsyncExample />
+      <Pivot>
+        <PivotItem headerText='Details List'>
+          <DetailsListExample />
+        </PivotItem>{' '}
+        <PivotItem headerText='Infinite Details List'>
+          <InfiniteDetailsListExample />
+        </PivotItem>
+      </Pivot>
     </FluentComponentsProvider>
   )
 }

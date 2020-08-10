@@ -41,6 +41,9 @@ export type ThemeExpanded = Theme & {
       text: string
     }
   }
+  select: {
+    icon: string
+  }
 }
 
 type Props = {
@@ -58,9 +61,22 @@ export const FluentComponentsProvider = ({ children, theme }: Props) => {
     ? tinyColorBackground.lighten(5).toHexString()
     : tinyColorBackground.darken(5).toHexString()
 
+  const background = theme.background || '#fff'
+
+  const defaultSelectIconColor = '#605e5c'
+  const isIconReadable = tinycolor.isReadable(
+    defaultSelectIconColor,
+    background
+  )
+
+  const mostReadableIconColor = tinycolor
+    .mostReadable(background, ['#605e5c'], { includeFallbackColors: true })
+    .toHexString()
+
   const value: ThemeExpanded = {
     ...theme,
     hoverBackground,
+    primary: theme.primary || '#0078d4',
     primaryDark: tinyColorPrimary.darken().toHexString(),
     detailsList: {
       evenRow: {
@@ -78,6 +94,9 @@ export const FluentComponentsProvider = ({ children, theme }: Props) => {
           theme.detailsList?.hoverRow?.background || hoverBackground || '#fff',
         text: theme.detailsList?.hoverRow?.text || theme.text || '#000'
       }
+    },
+    select: {
+      icon: isIconReadable ? defaultSelectIconColor : mostReadableIconColor
     }
   }
 

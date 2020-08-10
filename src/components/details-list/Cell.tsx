@@ -39,10 +39,7 @@ export const Cell = ({
             ;(el as HTMLElement).classList.add('hover')
           })
       }}
-      style={{
-        ...style,
-        textAlign: col.align ? col.align : 'left'
-      }}
+      style={style}
       className={((rowIndex - 1) % 2 !== 0 ? 'odd' : 'even') + ' cell'}
       data-columnindex={columnIndex}
       data-rowindex={rowIndex}
@@ -54,11 +51,12 @@ export const Cell = ({
   )
 }
 
-export const DefaultCell = styled.div`
+export const DefaultCell = styled.div<{ justifyContent: string }>`
   display: flex;
   align-items: center;
   padding: 0 12px;
   height: 100%;
+  justify-content: ${(p) => p.justifyContent};
 `
 
 const Root = styled.div<StyledComponentProps>`

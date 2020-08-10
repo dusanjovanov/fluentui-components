@@ -10,7 +10,7 @@ import { Cell, DefaultCell } from './Cell'
 import { HeaderCell } from './HeaderCell'
 import { DetailsListColumn, DetailsListSortProp } from './types'
 
-type Props = {
+export type DetailsListProps = {
   cols: DetailsListColumn[]
   rows: any[]
   sort?: DetailsListSortProp
@@ -24,6 +24,7 @@ type Props = {
   bodyCellRenderer?: GridCellRenderer
   headerCellRenderer?: GridCellRenderer
   id: string
+  refMultiGrid?: (ref: MultiGrid | null) => void
 } & MultiGridProps
 
 export const DetailsList = ({
@@ -35,10 +36,11 @@ export const DetailsList = ({
   onClickCell,
   bodyCellRenderer,
   headerCellRenderer,
+  refMultiGrid,
   id,
   ...props
-}: Props) => {
-  const refGrid = useRef<MultiGrid>(null)
+}: DetailsListProps) => {
+  const refGrid = useRef<MultiGrid | null>()
   const fabricTheme = useContext(FluentComponentsContext)
 
   useEffect(() => {
@@ -67,7 +69,15 @@ export const DetailsList = ({
         />
       )
     } else {
-      let toRender: ReactNode = <DefaultCell>{row[col.key]}</DefaultCell>
+      let justifyContent = col.align || 'flex-start'
+      if (col.align === 'right') {
+        justifyContent = 'flex-end'
+      }
+      let toRender: ReactNode = (
+        <DefaultCell justifyContent={justifyContent}>
+          {row[col.key]}
+        </DefaultCell>
+      )
 
       if (col.render) {
         const customRender = col.render({
@@ -79,7 +89,7 @@ export const DetailsList = ({
         toRender = customRender
       } else if (col.transform) {
         toRender = (
-          <DefaultCell>
+          <DefaultCell justifyContent={justifyContent}>
             {col.transform({
               col,
               row,
@@ -111,7 +121,12 @@ export const DetailsList = ({
       {() => (
         <MultiGrid
           {...props}
-          ref={refGrid}
+          ref={(ref) => {
+            refGrid.current = ref
+            if (refMultiGrid) {
+              refMultiGrid(ref)
+            }
+          }}
           id={id}
           width={width}
           columnCount={cols.length}

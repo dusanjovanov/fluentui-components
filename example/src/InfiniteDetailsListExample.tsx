@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { DetailsList, DetailsListColumn } from 'fluentui-components'
+import { DetailsListColumn, InfiniteDetailsList } from 'fluentui-components'
 import faker from 'faker'
 import { useWindowSize } from './useWindowSize'
 import styled from 'styled-components'
@@ -17,6 +17,7 @@ const getCols = (
   const cols: DetailsListColumn[] = [
     {
       key: 'profileImage',
+      isSortable: false,
       label: '',
       width: 50,
       align: 'center',
@@ -82,6 +83,7 @@ const getCols = (
     },
     {
       key: 'isEmployed',
+      isSortable: false,
       label: 'Is employed',
       width: 150,
       align: 'center',
@@ -108,6 +110,7 @@ const getCols = (
     },
     {
       key: 'companyName',
+      isSortable: false,
       label: 'Company',
       width: 200,
       transform: ({ row }) => {
@@ -120,6 +123,7 @@ const getCols = (
     },
     {
       key: 'gender',
+      isSortable: false,
       label: 'Gender',
       width: 200,
       transform: ({ row }) => {
@@ -176,6 +180,7 @@ const getCols = (
     },
     {
       key: 'options',
+      isSortable: false,
       label: '',
       width: 40,
       render: ({ row, rowIndex }) => {
@@ -256,30 +261,43 @@ function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-const initRows = Array(1000)
-  .fill(0)
-  .map((_, idx) => {
-    const isEmployed = faker.random.boolean()
-    const gender = Math.random() > 0.5 ? 'male' : 'female'
+const getRows = async (startIndex: number, stopIndex: number) => {
+  return await new Promise<any[]>((r) => {
+    setTimeout(() => {
+      const rows = Array(stopIndex - startIndex)
+        .fill(0)
+        .map((_, idx) => {
+          const isEmployed = faker.random.boolean()
+          const gender = Math.random() > 0.5 ? 'male' : 'female'
 
-    return {
-      id: faker.random.uuid(),
-      profileImage: `https://avatars.dicebear.com/api/${gender}/${idx}.svg`,
-      name: faker.name.firstName(),
-      address: faker.address.streetAddress() + ', ' + faker.address.city(),
-      phoneNumber: faker.phone.phoneNumber(),
-      email: faker.internet.email(),
-      isEmployed,
-      companyName: faker.company.companyName(),
-      gender,
-      pet: Math.random() > 0.7 ? 'dog' : Math.random() > 0.5 ? 'cat' : 'lizard',
-      dob: faker.date.past(30)
-    }
+          return {
+            id: faker.random.uuid(),
+            profileImage: `https://avatars.dicebear.com/api/${gender}/${idx}.svg`,
+            name: faker.name.firstName(),
+            address:
+              faker.address.streetAddress() + ', ' + faker.address.city(),
+            phoneNumber: faker.phone.phoneNumber(),
+            email: faker.internet.email(),
+            isEmployed,
+            companyName: faker.company.companyName(),
+            gender,
+            pet:
+              Math.random() > 0.7
+                ? 'dog'
+                : Math.random() > 0.5
+                ? 'cat'
+                : 'lizard',
+            dob: faker.date.past(30)
+          }
+        })
+      r(rows)
+    }, 500)
   })
+}
 
-export const DetailsListExample = () => {
+export const InfiniteDetailsListExample = () => {
   const { width: windowWidth } = useWindowSize()
-  const [rows, setRows] = useState(initRows)
+  const [rows, setRows] = useState<any[]>([])
   const [sort, setSort] = useState({ key: 'name', dir: 'asc' })
   // -100 for 50px padding on the body
   const [width, setWidth] = useState(windowWidth - 100)
@@ -287,6 +305,13 @@ export const DetailsListExample = () => {
   const { addToast } = useToasts()
 
   const cols = getCols(rows, setRows, addToast)
+
+  useEffect(() => {
+    ;(async () => {
+      const rows = await getRows(0, 16)
+      setRows(rows)
+    })()
+  }, [])
 
   useEffect(() => {
     setRows([
@@ -313,7 +338,7 @@ export const DetailsListExample = () => {
   return (
     <>
       <div style={{ height: headerHeight, paddingBottom: 20 }}>
-        <h1>Details List</h1>
+        <h1>Infinite Details List</h1>
         <Controls>
           <Slider
             value={width}
@@ -348,12 +373,18 @@ export const DetailsListExample = () => {
           />
         </Controls>
       </div>
-      <DetailsList
+      <InfiniteDetailsList
+        loadMoreRows={async ({ startIndex, stopIndex }) => {
+          const moreRows = await getRows(startIndex, stopIndex)
+          return setRows([...rows, ...moreRows])
+        }}
+        minimumBatchSize={16}
+        threshold={5}
         id='myList'
         cols={cols}
         rows={rows}
+        rowCount={1000000}
         columnCount={cols.length}
-        rowCount={rows.length}
         columnWidth={({ index }) => {
           if (cols[index].key === 'filler') {
             return Math.max(
