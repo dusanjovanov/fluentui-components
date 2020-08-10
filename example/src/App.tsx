@@ -4,6 +4,7 @@ import { DetailsListExample } from './DetailsListExample'
 import { FluentReactSelectAsyncExample } from './FluentReactSelectAsyncExample'
 import { FluentReactSelectExample } from './FluentReactSelectExample'
 import { InfiniteDetailsListExample } from './InfiniteDetailsListExample'
+import { CheckboxDropdownExample } from './CheckboxDropdownExample'
 
 const App = () => {
   return (
@@ -12,6 +13,9 @@ const App = () => {
         <PivotItem headerText='React Select'>
           <FluentReactSelectExample />
           <FluentReactSelectAsyncExample />
+        </PivotItem>
+        <PivotItem headerText='Checkbox Dropdown'>
+          <CheckboxDropdownExample />
         </PivotItem>
         <PivotItem headerText='Details List'>
           <Pivot>

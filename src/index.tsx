@@ -6,7 +6,7 @@ import {
   DetailsListColumn,
   DetailsListSortProp
 } from './components/details-list/types'
-import { SearchableDropdown } from './components/searchable-dropdown/SearchableDropdown'
+import { CheckboxDropdown } from './components/checkbox-dropdown/CheckboxDropdown'
 import FluentReactSelect from './components/fluent-react-select'
 
 initializeIcons()
@@ -17,6 +17,6 @@ export {
   InfiniteDetailsList,
   DetailsListColumn,
   DetailsListSortProp,
-  SearchableDropdown,
+  CheckboxDropdown,
   FluentReactSelect
 }
