@@ -84,7 +84,7 @@ const Root = styled.div`
   user-select: none;
   box-sizing: border-box;
   &:hover {
-    background-color: #f2f2f2;
+    background-color: #f3f2f1;
   }
   &:focus {
     outline: none;

@@ -34,7 +34,7 @@ const theme = (theme: Theme) => {
     colors: {
       ...theme.colors,
       primary50: '#f2f2f2',
-      primary25: '#f2f2f2',
+      primary25: '#f3f2f1',
       primary: '#edebe9',
       neutral30: '#323130',
       neutral20: '#8a8886'
@@ -125,7 +125,7 @@ const styles: Partial<Styles> = {
       fontSize: 14,
       color: '#323130',
       '&:hover': {
-        backgroundColor: '#f2f2f2'
+        backgroundColor: '#f3f2f1'
       }
     }
   },
