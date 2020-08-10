@@ -20,6 +20,7 @@ export type CheckboxDropdownProps = {
   searchPlaceholder?: string
   className?: string
   style?: CSSProperties
+  isSearchable?: boolean
 }
 
 export const CheckboxDropdown = ({
@@ -31,7 +32,8 @@ export const CheckboxDropdown = ({
   mulitpleSelectedLabel,
   searchPlaceholder,
   className,
-  style
+  style,
+  isSearchable = true
 }: CheckboxDropdownProps) => {
   const [search, setSearch] = useState('')
   const [shownOptions, setShownOptions] = useState(options)
@@ -110,33 +112,35 @@ export const CheckboxDropdown = ({
         onDismiss={() => setIsDropdownOpen(false)}
         hidden={!isDropdownOpen}
       >
-        <SearchContainer className='search-container'>
-          <SelectAllContainer>
-            <Checkbox
-              className='checkbox'
-              checked={areAllSelected}
-              onChange={() => {
-                if (areAllSelected) {
-                  onChange([])
-                } else {
-                  onChange([...options])
+        {isSearchable && (
+          <SearchContainer className='search-container'>
+            <SelectAllContainer>
+              <Checkbox
+                className='checkbox'
+                checked={areAllSelected}
+                onChange={() => {
+                  if (areAllSelected) {
+                    onChange([])
+                  } else {
+                    onChange([...options])
+                  }
+                }}
+              />
+            </SelectAllContainer>
+            <SearchBox
+              className='search'
+              value={search}
+              onChange={(_, value) => setSearch(value || '')}
+              placeholder={searchPlaceholder || 'Search options...'}
+              styles={{
+                root: {
+                  flex: 1,
+                  border: 0
                 }
               }}
             />
-          </SelectAllContainer>
-          <SearchBox
-            className='search'
-            value={search}
-            onChange={(_, value) => setSearch(value || '')}
-            placeholder={searchPlaceholder || 'Search options...'}
-            styles={{
-              root: {
-                flex: 1,
-                border: 0
-              }
-            }}
-          />
-        </SearchContainer>
+          </SearchContainer>
+        )}
         <OptionsContainer className='options-container'>
           {shownOptions.map((o) => {
             const _isChecked = !!value.find((_o) => _o.value === o.value)
@@ -170,6 +174,9 @@ export const SearchContainer = styled.div`
   display: flex;
   align-items: center;
   border: 1px solid #8a8886;
+  .ms-SearchBox::after {
+    display: none;
+  }
 `
 
 export const SelectAllContainer = styled.div`
