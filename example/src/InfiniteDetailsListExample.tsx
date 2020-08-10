@@ -17,7 +17,7 @@ const getCols = (
   const cols: DetailsListColumn[] = [
     {
       key: 'profileImage',
-      isSortable: false,
+
       label: '',
       width: 50,
       align: 'center',
@@ -27,13 +27,11 @@ const getCols = (
     },
     {
       key: 'name',
-      isSortable: true,
       label: 'Name',
       width: 100
     },
     {
       key: 'dob',
-      isSortable: true,
       label: 'Date of Birth',
       width: 150,
       transform: ({ row }) => {
@@ -50,7 +48,6 @@ const getCols = (
     },
     {
       key: 'address',
-      isSortable: true,
       label: 'Address',
       width: 200,
       transform: ({ row }) => {
@@ -71,19 +68,17 @@ const getCols = (
     },
     {
       key: 'phoneNumber',
-      isSortable: true,
       label: 'Phone',
       width: 200
     },
     {
       key: 'email',
-      isSortable: true,
       label: 'Email',
       width: 200
     },
     {
       key: 'isEmployed',
-      isSortable: false,
+
       label: 'Is employed',
       width: 150,
       align: 'center',
@@ -110,7 +105,6 @@ const getCols = (
     },
     {
       key: 'companyName',
-      isSortable: false,
       label: 'Company',
       width: 200,
       transform: ({ row }) => {
@@ -123,7 +117,6 @@ const getCols = (
     },
     {
       key: 'gender',
-      isSortable: false,
       label: 'Gender',
       width: 200,
       transform: ({ row }) => {
@@ -152,7 +145,6 @@ const getCols = (
     },
     {
       key: 'pet',
-      isSortable: true,
       label: 'Pet',
       width: 70,
       align: 'center',
@@ -180,7 +172,6 @@ const getCols = (
     },
     {
       key: 'options',
-      isSortable: false,
       label: '',
       width: 40,
       render: ({ row, rowIndex }) => {

@@ -5,15 +5,8 @@ import {
   ITextField,
   TextField
 } from 'office-ui-fabric-react'
-import React, {
-  CSSProperties,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import React, { CSSProperties, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { FluentComponentsContext } from '../../FluentComponentsContext'
 import { OptionType } from '../../types'
 import { Option } from './Option'
 
@@ -38,7 +31,6 @@ export const SearchableDropdown = ({
   const [search, setSearch] = useState('')
   const [shownOptions, setShownOptions] = useState(options)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const theme = useContext(FluentComponentsContext)
   const refTextField = useRef<ITextField>(null)
 
   useEffect(() => {
@@ -170,7 +162,6 @@ export const SearchableDropdown = ({
                   onChange(o)
                   setIsDropdownOpen(false)
                 }}
-                fabricTheme={theme}
               />
             )
           })}

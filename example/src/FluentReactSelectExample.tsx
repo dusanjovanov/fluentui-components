@@ -1,5 +1,5 @@
 import faker from 'faker'
-import { useFluentReactSelect } from 'fluentui-components'
+import { FluentReactSelect } from 'fluentui-components'
 import React, { useState } from 'react'
 import Select from 'react-select'
 import styled from 'styled-components'
@@ -13,7 +13,6 @@ const options = Array(100)
 
 export const FluentReactSelectExample = () => {
   const [value, setValue] = useState<any>([])
-  const FluentReactSelect = useFluentReactSelect()
 
   return (
     <Root>

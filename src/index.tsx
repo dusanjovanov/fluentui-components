@@ -6,10 +6,8 @@ import {
   DetailsListColumn,
   DetailsListSortProp
 } from './components/details-list/types'
-import { FluentComponentsProvider, Theme } from './FluentComponentsContext'
 import { SearchableDropdown } from './components/searchable-dropdown/SearchableDropdown'
-import { useFluentReactSelect } from './components/fluent-react-select'
-import { useTheme as useFluentTheme } from './useTheme'
+import FluentReactSelect from './components/fluent-react-select'
 
 initializeIcons()
 
@@ -19,9 +17,6 @@ export {
   InfiniteDetailsList,
   DetailsListColumn,
   DetailsListSortProp,
-  FluentComponentsProvider,
-  Theme,
   SearchableDropdown,
-  useFluentReactSelect,
-  useFluentTheme
+  FluentReactSelect
 }
