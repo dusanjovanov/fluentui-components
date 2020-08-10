@@ -1,48 +1,19 @@
-# fabric-checkbox-select
+# fluentui-components
 
-> Multiple select checkbox list component for Fabric (Fluent) UI
+> Additional components for the FluentUI (Fabric) React library
 
-[![NPM](https://img.shields.io/npm/v/fabric-checkbox-select.svg)](https://www.npmjs.com/package/fabric-checkbox-select) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/fluentui-components.svg)](https://www.npmjs.com/package/fluentui-components) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-npm install --save fabric-checkbox-select
+npm install --save fluentui-components
 ```
 
 or
 
 ```bash
-yarn add fabric-checkbox-select
-```
-
-## Usage
-
-```tsx
-import React, { useState } from 'react'
-import { CheckboxSelect, Option } from 'fabric-checkbox-select'
-
-const options = [
-  { label: 'Apple', value: 'apple' },
-  { label: 'Orange', value: 'orange' }
-]
-
-const App = () => {
-  const [value, setValue] = useState<Option[]>([])
-
-  return (
-    <CheckboxSelect
-      value={value}
-      onChange={(value) => setValue(value)}
-      options={options}
-      label='Fruits'
-      oneSelectedLabel='One selected'
-      mulitpleSelectedLabel={`${value.length} fruits selected`}
-    />
-  )
-}
-
-export default App
+yarn add fluentui-components
 ```
 
 ## License
