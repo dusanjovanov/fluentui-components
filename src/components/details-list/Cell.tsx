@@ -62,6 +62,6 @@ const Root = styled.div`
   border-bottom: 1px solid #f3f2f1;
   box-sizing: border-box;
   &.hover {
-    background-color: #f2f2f2;
+    background-color: #f3f2f1;
   }
 `

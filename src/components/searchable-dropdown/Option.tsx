@@ -21,7 +21,7 @@ const Root = styled.div`
   display: flex;
   align-items: center;
   &:hover {
-    background-color: #f2f2f2;
+    background-color: #f3f2f1;
   }
 `
 
