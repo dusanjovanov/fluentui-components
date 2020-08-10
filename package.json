@@ -1,10 +1,10 @@
 {
-  "name": "fabric-checkbox-select",
+  "name": "fluentui-components",
   "version": "1.0.2",
   "description": "Checkbox select component styled like Fabric (Fluent) UI",
   "author": "dusanjovanov",
   "license": "MIT",
-  "repository": "dusanjovanov/fabric-checkbox-select",
+  "repository": "dusanjovanov/fluentui-components",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
