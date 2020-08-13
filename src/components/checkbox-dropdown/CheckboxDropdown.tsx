@@ -5,10 +5,11 @@ import {
   DirectionalHint,
   SearchBox
 } from 'office-ui-fabric-react'
-import React, { CSSProperties, useEffect, useState } from 'react'
+import React, { CSSProperties, useEffect, useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { OptionType } from '../../types'
 import { Option } from './Option'
+import { uniqueId } from '../../utils'
 
 export type CheckboxDropdownProps = {
   options: { value: any; label: string }[]
@@ -59,6 +60,10 @@ export const CheckboxDropdown = ({
 
   const areAllSelected = value.length === options.length
 
+  const id = useMemo(() => {
+    return uniqueId()
+  }, [])
+
   return (
     <div className={className} style={style}>
       <DefaultButton
@@ -67,7 +72,7 @@ export const CheckboxDropdown = ({
           iconName: 'ChevronDown',
           style: { fontSize: 12 }
         }}
-        id='fabricCheckboxSelectButton'
+        id={id}
         text={buttonText}
         onClick={() => {
           setIsDropdownOpen(!isDropdownOpen)
@@ -98,14 +103,13 @@ export const CheckboxDropdown = ({
       <Callout
         className='dropdown'
         isBeakVisible={false}
-        target={document.querySelector('#fabricCheckboxSelectButton')}
+        target={document.querySelector(`#${id}`)}
         directionalHint={DirectionalHint.bottomLeftEdge}
         styles={{
           calloutMain: {
             overflowY: 'hidden',
-            width: document
-              .querySelector('#fabricCheckboxSelectButton')
-              ?.getBoundingClientRect().width,
+            width: document.querySelector(`#${id}`)?.getBoundingClientRect()
+              .width,
             minWidth: 250
           }
         }}
