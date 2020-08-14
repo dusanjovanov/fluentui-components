@@ -22,6 +22,7 @@ export type CheckboxDropdownProps = {
   className?: string
   style?: CSSProperties
   isSearchable?: boolean
+  disabled?: boolean
 }
 
 export const CheckboxDropdown = ({
@@ -34,7 +35,8 @@ export const CheckboxDropdown = ({
   searchPlaceholder,
   className,
   style,
-  isSearchable = true
+  isSearchable = true,
+  disabled
 }: CheckboxDropdownProps) => {
   const [search, setSearch] = useState('')
   const [shownOptions, setShownOptions] = useState(options)
@@ -77,6 +79,7 @@ export const CheckboxDropdown = ({
         onClick={() => {
           setIsDropdownOpen(!isDropdownOpen)
         }}
+        disabled={disabled}
         styles={{
           root: {
             width: '100%',
