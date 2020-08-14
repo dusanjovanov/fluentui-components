@@ -50,6 +50,12 @@ export const CheckboxDropdown = ({
     )
   }, [search, options])
 
+  useEffect(() => {
+    if (disabled && isDropdownOpen) {
+      setIsDropdownOpen(false)
+    }
+  }, [disabled])
+
   let buttonText = label
 
   if (value.length === 1) {

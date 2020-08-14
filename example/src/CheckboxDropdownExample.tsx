@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CheckboxDropdown, OptionType } from 'fluentui-components'
 import faker from 'faker'
 import { Checkbox } from 'office-ui-fabric-react'
@@ -13,6 +13,7 @@ const options = Array(100)
 export const CheckboxDropdownExample = () => {
   const [value, setValue] = useState<OptionType[]>([])
   const [isSearchable, setIsSearchable] = useState(true)
+  const [isDisabled, setIsDisabled] = useState(false)
 
   return (
     <div
@@ -21,11 +22,21 @@ export const CheckboxDropdownExample = () => {
       }}
     >
       <h1>Checkbox Dropdown</h1>
-      <div>
+      <div style={{ display: 'flex' }}>
         <Checkbox
           checked={isSearchable}
           onChange={() => setIsSearchable(!isSearchable)}
           label='Is searchable'
+          styles={{
+            root: {
+              marginRight: 5
+            }
+          }}
+        />
+        <Checkbox
+          checked={isDisabled}
+          onChange={() => setIsDisabled(!isDisabled)}
+          label='Is disabled'
         />
       </div>
       <br />
@@ -39,6 +50,7 @@ export const CheckboxDropdownExample = () => {
         label='People'
         searchPlaceholder='Search options...'
         isSearchable={isSearchable}
+        disabled={isDisabled}
       />
     </div>
   )
