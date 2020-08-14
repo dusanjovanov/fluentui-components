@@ -58,7 +58,6 @@ export const DetailsList = ({
           key={key}
           cellProps={cellProps}
           col={col}
-          isLoading={false}
           sort={sort}
           onClick={() => {
             onClickHeader && onClickHeader({ col, colIndex: columnIndex })

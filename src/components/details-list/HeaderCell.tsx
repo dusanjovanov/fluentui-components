@@ -8,17 +8,10 @@ type Props = {
   cellProps: GridCellProps
   col: DetailsListColumn
   sort?: DetailsListSortProp
-  isLoading: boolean
   onClick?: (col: DetailsListColumn) => void
 }
 
-export const HeaderCell = ({
-  cellProps,
-  col,
-  sort,
-  isLoading,
-  onClick
-}: Props) => {
+export const HeaderCell = ({ cellProps, col, sort, onClick }: Props) => {
   const { style, columnIndex } = cellProps
 
   let label: ReactNode = <Label>{col.label}</Label>
@@ -58,10 +51,7 @@ export const HeaderCell = ({
 
   return (
     <Root
-      style={{
-        ...style,
-        cursor: isLoading ? 'wait' : 'pointer'
-      }}
+      style={style}
       onClick={() => {
         onClick && onClick(col)
       }}
