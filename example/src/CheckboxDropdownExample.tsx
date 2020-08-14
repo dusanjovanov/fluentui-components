@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { CheckboxDropdown, OptionType } from 'fluentui-components'
 import faker from 'faker'
 import { Checkbox } from 'office-ui-fabric-react'
