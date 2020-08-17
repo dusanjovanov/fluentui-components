@@ -23,7 +23,7 @@ const ClearIcon = styled.div`
   padding: 0 10px;
   i {
     font-size: 11px;
-    color: #605e5c;
+    color: #ababab;
   }
 `
 
