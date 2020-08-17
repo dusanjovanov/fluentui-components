@@ -109,7 +109,7 @@ const styles: Partial<Styles> = {
   indicatorSeparator: (p) => {
     return {
       ...p,
-      backgroundColor: '#888',
+      backgroundColor: '#ccc',
       width: 0.8
     }
   },
