@@ -1,6 +1,6 @@
 import { Icon, Spinner, SpinnerSize } from 'office-ui-fabric-react'
 import React from 'react'
-import { Props, Theme } from 'react-select'
+import { Props } from 'react-select'
 import styled from 'styled-components'
 
 const ChevronIcon = styled(Icon)`
@@ -41,7 +41,7 @@ const theme: Props['theme'] = (theme) => {
   }
 }
 
-const components: Props['components'] = {
+const components: any = {
   DropdownIndicator: () => <ChevronIcon iconName='ChevronDown' />,
   ClearIndicator: ({ innerProps }: { innerProps: any }) => {
     return (
