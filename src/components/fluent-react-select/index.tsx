@@ -1,8 +1,7 @@
-import styled from 'styled-components'
 import { Icon, Spinner, SpinnerSize } from 'office-ui-fabric-react'
-import { Styles, Theme } from 'react-select'
 import React from 'react'
-import { SelectComponents } from 'react-select/src/components'
+import { Props, Theme } from 'react-select'
+import styled from 'styled-components'
 
 const ChevronIcon = styled(Icon)`
   display: inline-block;
@@ -27,7 +26,7 @@ const ClearIcon = styled.div`
   }
 `
 
-const theme = (theme: Theme) => {
+const theme: Props['theme'] = (theme) => {
   return {
     ...theme,
     borderRadius: 0,
@@ -42,7 +41,7 @@ const theme = (theme: Theme) => {
   }
 }
 
-const components: Partial<SelectComponents<any>> = {
+const components: Props['components'] = {
   DropdownIndicator: () => <ChevronIcon iconName='ChevronDown' />,
   ClearIndicator: ({ innerProps }: { innerProps: any }) => {
     return (
@@ -60,7 +59,7 @@ const components: Partial<SelectComponents<any>> = {
     )
   }
 }
-const styles: Partial<Styles> = {
+const styles: Props['styles'] = {
   container: (p) => {
     return {
       ...p,
