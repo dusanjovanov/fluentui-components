@@ -1,4 +1,4 @@
-import { Icon, Spinner, SpinnerSize } from 'office-ui-fabric-react'
+import { Icon, Spinner, SpinnerSize, IconButton } from 'office-ui-fabric-react'
 import React from 'react'
 import { Props } from 'react-select'
 import styled from 'styled-components'
@@ -26,10 +26,23 @@ const ClearIcon = styled.div`
   }
 `
 
+const MultiValueRemoveIconButton = styled(IconButton)`
+  color: #605e5c;
+  height: 100%;
+  border-radius: 0px 2px 2px 0px;
+  &:hover {
+    background-color: #e1dfdd;
+    color: #605e5c;
+  }
+  i {
+    font-size: 12px;
+  }
+`
+
 const theme: Props['theme'] = (theme) => {
   return {
     ...theme,
-    borderRadius: 0,
+    borderRadius: 2,
     colors: {
       ...theme.colors,
       primary50: '#f2f2f2',
@@ -57,20 +70,21 @@ const components: any = {
         styles={{ root: { marginRight: 9 } }}
       />
     )
+  },
+  MultiValueRemove: (props: any) => {
+    return (
+      <MultiValueRemoveIconButton
+        iconProps={{ iconName: 'Cancel' }}
+        onClick={props.innerProps.onClick}
+      />
+    )
   }
 }
 const styles: Props['styles'] = {
-  container: (p) => {
-    return {
-      ...p,
-      height: 32
-    }
-  },
   control: (p, s) => {
     return {
       ...p,
       borderColor: '#605e5c',
-      height: 32,
       minHeight: 32,
       boxShadow: 'none',
       outline: s.isFocused && !s.menuIsOpen ? `2px solid #0078d4` : 'none',
@@ -84,11 +98,12 @@ const styles: Props['styles'] = {
     ...p,
     fontSize: 14
   }),
-  valueContainer: (p) => ({
-    ...p,
-    height: 30,
-    padding: '0 8px'
-  }),
+  valueContainer: (p, s) => {
+    return {
+      ...p,
+      padding: s.isMulti ? (s.hasValue ? 0 : '0 8px') : '0 8px'
+    }
+  },
   menu: (p) => {
     return {
       ...p,
@@ -116,6 +131,16 @@ const styles: Props['styles'] = {
     return {
       ...p,
       fontSize: 14
+    }
+  },
+  multiValue: (p) => {
+    return {
+      ...p,
+      height: 26,
+      backgroundColor: '#f3f2f1',
+      '&:hover': {
+        backgroundColor: '#edebe9'
+      }
     }
   },
   option: (p) => {
