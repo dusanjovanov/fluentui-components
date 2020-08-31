@@ -1,6 +1,7 @@
 import React from 'react'
 import { InfiniteLoader, InfiniteLoaderProps } from 'react-virtualized'
-import { DetailsList, DetailsListProps } from '../details-list/DetailsList'
+import { DetailsList } from '../details-list/DetailsList'
+import { DetailsListProps } from '../details-list/types'
 
 export type InfiniteDetailsListProps = DetailsListProps & {
   loadMoreRows: InfiniteLoaderProps['loadMoreRows']
