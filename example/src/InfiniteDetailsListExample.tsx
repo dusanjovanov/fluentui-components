@@ -365,7 +365,7 @@ export const InfiniteDetailsListExample = () => {
         </Controls>
       </div>
       <InfiniteDetailsList
-        loadMoreRows={async ({ startIndex, stopIndex }) => {
+        loadMoreRows={async ({ startIndex, stopIndex }: any) => {
           const moreRows = await getRows(startIndex, stopIndex)
           return setRows([...rows, ...moreRows])
         }}
@@ -376,7 +376,7 @@ export const InfiniteDetailsListExample = () => {
         rows={rows}
         rowCount={1000000}
         columnCount={cols.length}
-        columnWidth={({ index }) => {
+        columnWidth={({ index }: any) => {
           if (cols[index].key === 'filler') {
             return Math.max(
               0,
@@ -393,7 +393,7 @@ export const InfiniteDetailsListExample = () => {
         onSectionRendered={() => {
           ReactTooltip.rebuild()
         }}
-        onClickCell={({ row }) => {
+        onClickCell={({ row }: any) => {
           addToast(`Clicked on ${row.name}`, {
             appearance: 'info',
             autoDismiss: true,
@@ -402,7 +402,7 @@ export const InfiniteDetailsListExample = () => {
           })
         }}
         sort={sort}
-        onClickHeader={({ col }) => {
+        onClickHeader={({ col }: any) => {
           if (!col.isSortable) return
 
           const isSorted = sort.key === col.key

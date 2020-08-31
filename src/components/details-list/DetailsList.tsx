@@ -1,30 +1,7 @@
-import React, { ReactNode, useEffect, useRef } from 'react'
-import {
-  AutoSizer,
-  GridCellRenderer,
-  MultiGrid,
-  MultiGridProps
-} from 'react-virtualized'
-import { Cell, DefaultCell } from './Cell'
-import { HeaderCell } from './HeaderCell'
-import { DetailsListColumn, DetailsListSortProp } from './types'
-
-export type DetailsListProps = {
-  cols: DetailsListColumn[]
-  rows: any[]
-  sort?: DetailsListSortProp
-  onClickHeader?: (props: { col: DetailsListColumn; colIndex: number }) => void
-  onClickCell?: (props: {
-    col: DetailsListColumn
-    row: any
-    colIndex: number
-    rowIndex: number
-  }) => void
-  bodyCellRenderer?: GridCellRenderer
-  headerCellRenderer?: GridCellRenderer
-  id: string
-  refMultiGrid?: (ref: MultiGrid | null) => void
-} & MultiGridProps
+import React, { useEffect, useRef } from 'react'
+import { AutoSizer, MultiGrid } from 'react-virtualized'
+import { useCellRenderer } from './useCellRenderer'
+import { DetailsListProps } from './types'
 
 export const DetailsList = ({
   cols,
@@ -41,75 +18,20 @@ export const DetailsList = ({
 }: DetailsListProps) => {
   const refGrid = useRef<MultiGrid | null>()
 
+  const cellRenderer = useCellRenderer({
+    cols,
+    rows,
+    onClickHeader,
+    sort,
+    onClickCell,
+    refGrid
+  })
+
   useEffect(() => {
     if (!refGrid.current) return
     refGrid.current.recomputeGridSize()
     refGrid.current.forceUpdateGrids()
   }, [width])
-
-  const cellRenderer: GridCellRenderer = (cellProps) => {
-    const { columnIndex, rowIndex, key } = cellProps
-    const col = cols[columnIndex]
-    const row = rows[rowIndex - 1]
-
-    if (rowIndex === 0) {
-      return (
-        <HeaderCell
-          key={key}
-          cellProps={cellProps}
-          col={col}
-          sort={sort}
-          onClick={() => {
-            onClickHeader && onClickHeader({ col, colIndex: columnIndex })
-          }}
-        />
-      )
-    } else {
-      let justifyContent = col.align || 'flex-start'
-      if (col.align === 'right') {
-        justifyContent = 'flex-end'
-      }
-      let toRender: ReactNode = (
-        <DefaultCell justifyContent={justifyContent}>
-          {row[col.key]}
-        </DefaultCell>
-      )
-
-      if (col.render) {
-        const customRender = col.render({
-          col,
-          row,
-          colIndex: columnIndex,
-          rowIndex: rowIndex - 1
-        })
-        toRender = customRender
-      } else if (col.transform) {
-        toRender = (
-          <DefaultCell justifyContent={justifyContent}>
-            {col.transform({
-              col,
-              row,
-              colIndex: columnIndex,
-              rowIndex: rowIndex - 1
-            })}
-          </DefaultCell>
-        )
-      }
-      return (
-        <Cell
-          key={key}
-          cellProps={cellProps}
-          onClick={() => {
-            onClickCell &&
-              onClickCell({ col, row, colIndex: columnIndex, rowIndex })
-          }}
-          col={col}
-        >
-          {toRender}
-        </Cell>
-      )
-    }
-  }
 
   return (
     <AutoSizer>

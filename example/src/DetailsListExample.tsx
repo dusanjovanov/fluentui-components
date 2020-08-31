@@ -354,7 +354,7 @@ export const DetailsListExample = () => {
         rows={rows}
         columnCount={cols.length}
         rowCount={rows.length}
-        columnWidth={({ index }) => {
+        columnWidth={({ index }: any) => {
           if (cols[index].key === 'filler') {
             return Math.max(
               0,
@@ -364,14 +364,13 @@ export const DetailsListExample = () => {
           return cols[index].width
         }}
         fixedColumnCount={fixedCols}
-        cellRenderer={() => null}
         height={500}
         width={width}
         rowHeight={40}
         onSectionRendered={() => {
           ReactTooltip.rebuild()
         }}
-        onClickCell={({ row }) => {
+        onClickCell={({ row }: any) => {
           addToast(`Clicked on ${row.name}`, {
             appearance: 'info',
             autoDismiss: true,
@@ -380,7 +379,7 @@ export const DetailsListExample = () => {
           })
         }}
         sort={sort}
-        onClickHeader={({ col }) => {
+        onClickHeader={({ col }: any) => {
           if (!col.isSortable) return
 
           const isSorted = sort.key === col.key
