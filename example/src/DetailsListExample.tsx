@@ -40,7 +40,7 @@ const getCols = (
       },
       renderLabel: () => {
         return (
-          <div style={{ display: 'flex' }}>
+          <div style={{ display: 'flex', paddingLeft: 5 }}>
             <Icon iconName='Calendar' />
           </div>
         )

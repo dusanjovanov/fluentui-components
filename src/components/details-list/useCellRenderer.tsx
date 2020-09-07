@@ -41,11 +41,19 @@ export const useCellRenderer = ({
     const { columnIndex, rowIndex, key, style } = cellProps
     const col = cols[columnIndex]
     const row = rows[rowIndex - 1]
+    const isSortable = sort && col.isSortable
 
-    let label: ReactNode = <Label>{col.label}</Label>
+    let label: ReactNode
 
     if (col.renderLabel) {
       label = col.renderLabel({ col, colIndex: columnIndex })
+    }
+    //
+    else {
+      label =
+        col.label.length > 0 ? (
+          <Label className={clsx({ isSortable })}>{col.label}</Label>
+        ) : null
     }
 
     let headerContent
@@ -60,12 +68,12 @@ export const useCellRenderer = ({
     //
     else {
       headerContent = (
-        <DefaultCell key={key} justifyContent={align}>
-          {sort && col.isSortable && (
-            <StyledIcon
+        <DefaultHeaderCell key={key} justifyContent={align}>
+          {isSortable && (
+            <Icon
               iconName={
-                sort.key === col.key
-                  ? sort.dir === 'asc'
+                sort!.key === col.key
+                  ? sort!.dir === 'asc'
                     ? 'SortUp'
                     : 'SortDown'
                   : 'Sort'
@@ -73,7 +81,7 @@ export const useCellRenderer = ({
             />
           )}
           {label}
-        </DefaultCell>
+        </DefaultHeaderCell>
       )
     }
 
@@ -96,12 +104,8 @@ export const useCellRenderer = ({
         </HeaderCell>
       )
     } else {
-      let justifyContent = col.align || 'flex-start'
-      if (col.align === 'right') {
-        justifyContent = 'flex-end'
-      }
       let toRender: ReactNode = (
-        <DefaultCell justifyContent={justifyContent}>
+        <DefaultCell textAlign={col.align || 'left'}>
           {row[col.key]}
         </DefaultCell>
       )
@@ -116,7 +120,7 @@ export const useCellRenderer = ({
         toRender = customRender
       } else if (col.transform) {
         toRender = (
-          <DefaultCell key={key} justifyContent={justifyContent}>
+          <DefaultCell key={key} textAlign={col.align || 'left'}>
             {col.transform({
               col,
               row,
@@ -173,12 +177,22 @@ const Cell = styled.div`
   }
 `
 
-export const DefaultCell = styled.div<{ justifyContent: string }>`
+export const DefaultHeaderCell = styled.div<{ justifyContent: string }>`
   display: flex;
   align-items: center;
   padding: 0 12px;
   height: 100%;
   justify-content: ${(p) => p.justifyContent};
+`
+
+export const DefaultCell = styled.div<{ textAlign: string }>`
+  padding: 0 12px;
+  height: 100%;
+  line-height: 41px;
+  text-align: ${(p) => p.textAlign};
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `
 
 const HeaderCell = styled.div`
@@ -197,12 +211,12 @@ const HeaderCell = styled.div`
   }
 `
 
-const StyledIcon = styled(Icon)`
-  margin-right: 5px;
-`
-
 const Label = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  padding-left: 0;
+  &.isSortable {
+    padding-left: 5px;
+  }
 `
