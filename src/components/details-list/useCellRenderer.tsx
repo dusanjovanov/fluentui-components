@@ -68,7 +68,7 @@ export const useCellRenderer = ({
     //
     else {
       headerContent = (
-        <DefaultHeaderCell key={key} justifyContent={align}>
+        <DefaultCell key={key} justifyContent={align}>
           {isSortable && (
             <Icon
               iconName={
@@ -81,7 +81,7 @@ export const useCellRenderer = ({
             />
           )}
           {label}
-        </DefaultHeaderCell>
+        </DefaultCell>
       )
     }
 
@@ -104,8 +104,12 @@ export const useCellRenderer = ({
         </HeaderCell>
       )
     } else {
+      let justifyContent = col.align || 'flex-start'
+      if (col.align === 'right') {
+        justifyContent = 'flex-end'
+      }
       let toRender: ReactNode = (
-        <DefaultCell textAlign={col.align || 'left'}>
+        <DefaultCell justifyContent={justifyContent}>
           {row[col.key]}
         </DefaultCell>
       )
@@ -120,7 +124,7 @@ export const useCellRenderer = ({
         toRender = customRender
       } else if (col.transform) {
         toRender = (
-          <DefaultCell key={key} textAlign={col.align || 'left'}>
+          <DefaultCell key={key} justifyContent={justifyContent}>
             {col.transform({
               col,
               row,
@@ -177,22 +181,12 @@ const Cell = styled.div`
   }
 `
 
-export const DefaultHeaderCell = styled.div<{ justifyContent: string }>`
+export const DefaultCell = styled.div<{ justifyContent: string }>`
   display: flex;
   align-items: center;
   padding: 0 12px;
   height: 100%;
   justify-content: ${(p) => p.justifyContent};
-`
-
-export const DefaultCell = styled.div<{ textAlign: string }>`
-  padding: 0 12px;
-  height: 100%;
-  line-height: 41px;
-  text-align: ${(p) => p.textAlign};
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 `
 
 const HeaderCell = styled.div`
