@@ -105,7 +105,8 @@ export const CheckboxDropdown = ({
             whiteSpace: 'nowrap',
             textOverflow: 'ellipsis',
             textAlign: 'left',
-            fontWeight: 'normal'
+            fontWeight: 'normal',
+            lineHeight: 'normal'
           }
         }}
       />
