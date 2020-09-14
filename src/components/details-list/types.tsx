@@ -59,6 +59,8 @@ export type DetailsListProps = {
   height: MultiGridProps['height']
   width: MultiGridProps['width']
   columnWidth: number | ((params: Index) => number)
+  isLoading?: boolean
+  noDataMessage?: string
 } & Partial<MultiGridProps>
 
 export type DetailsListHoverState = {

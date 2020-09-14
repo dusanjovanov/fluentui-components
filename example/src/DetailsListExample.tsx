@@ -7,7 +7,7 @@ import ReactTooltip from 'react-tooltip'
 import { createPortal } from 'react-dom'
 import moment from 'moment'
 import { useToasts } from 'react-toast-notifications'
-import { Icon, Slider } from 'office-ui-fabric-react'
+import { Checkbox, Icon, Slider } from 'office-ui-fabric-react'
 
 const getCols = (
   rows: any[],
@@ -285,8 +285,24 @@ export const DetailsListExample = () => {
   const [width, setWidth] = useState(windowWidth - 100)
   const [fixedCols, setFixedCols] = useState(2)
   const { addToast } = useToasts()
+  const [isLoading, setIsLoading] = useState(false)
+  const [noData, setNoData] = useState(false)
 
   const cols = getCols(rows, setRows, addToast)
+
+  useEffect(() => {
+    if (noData) {
+      setRows([])
+    } else {
+      setRows(initRows)
+    }
+  }, [noData])
+
+  useEffect(() => {
+    if (isLoading) {
+      setNoData(true)
+    }
+  }, [isLoading])
 
   useEffect(() => {
     setRows([
@@ -346,6 +362,19 @@ export const DetailsListExample = () => {
               }
             }}
           />
+          <Checkbox
+            checked={isLoading}
+            onChange={() => setIsLoading(!isLoading)}
+            label='Is loading'
+            styles={{
+              root: { marginRight: 10 }
+            }}
+          />
+          <Checkbox
+            checked={noData}
+            onChange={() => setNoData(!noData)}
+            label='No data'
+          />
         </Controls>
       </div>
       <DetailsList
@@ -395,6 +424,8 @@ export const DetailsListExample = () => {
             })
           }
         }}
+        isLoading={isLoading}
+        noDataMessage='No data to show'
       />
       {createPortal(
         <ReactTooltip id='tooltip' effect='solid' />,
