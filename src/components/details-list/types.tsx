@@ -13,18 +13,8 @@ export type DetailsListColumn = {
   width: number
   align?: 'left' | 'center' | 'right'
   style?: CSSProperties
-  render?: (props: {
-    col: DetailsListColumn
-    row: any
-    colIndex: number
-    rowIndex: number
-  }) => ReactNode
-  transform?: (props: {
-    col: DetailsListColumn
-    row: any
-    colIndex: number
-    rowIndex: number
-  }) => ReactNode
+  render?: (props: DetailsListCustomCellProps) => ReactNode
+  transform?: (props: DetailsListCustomCellProps) => ReactNode
   renderLabel?: (props: {
     col: DetailsListColumn
     colIndex: number
@@ -34,6 +24,8 @@ export type DetailsListColumn = {
     colIndex: number
   }) => ReactNode
   data?: { [key: string]: any }
+  truncateProps?: (props: DetailsListCustomCellProps) => any
+  cellProps?: (props: DetailsListCustomCellProps) => any
 }
 
 export type DetailsListSortProp = {
@@ -68,4 +60,11 @@ export type DetailsListHoverState = {
   row: any
   rowIndex: number | null
   colIndex: number | null
+}
+
+export type DetailsListCustomCellProps = {
+  col: DetailsListColumn
+  row: any
+  colIndex: number
+  rowIndex: number
 }

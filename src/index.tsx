@@ -4,7 +4,8 @@ import { DetailsList } from './components/details-list/DetailsList'
 import { InfiniteDetailsList } from './components/infinite-details-list/InfiniteDetailsList'
 import {
   DetailsListColumn,
-  DetailsListSortProp
+  DetailsListSortProp,
+  DetailsListCustomCellProps
 } from './components/details-list/types'
 import { CheckboxDropdown } from './components/checkbox-dropdown/CheckboxDropdown'
 import FluentReactSelect from './components/fluent-react-select'
@@ -17,6 +18,7 @@ export {
   InfiniteDetailsList,
   DetailsListColumn,
   DetailsListSortProp,
+  DetailsListCustomCellProps,
   CheckboxDropdown,
   FluentReactSelect
 }

@@ -52,21 +52,10 @@ const getCols = (
       isSortable: true,
       label: 'Address',
       width: 200,
-      transform: ({ row }) => {
-        return (
-          <div
-            data-for='tooltip'
-            data-tip={row.address}
-            style={{
-              textOverflow: 'ellipsis',
-              overflow: 'hidden',
-              whiteSpace: 'nowrap'
-            }}
-          >
-            {row.address}
-          </div>
-        )
-      }
+      truncateProps: ({ row }) => ({
+        'data-for': 'tooltip',
+        'data-tip': row.address
+      })
     },
     {
       key: 'phoneNumber',

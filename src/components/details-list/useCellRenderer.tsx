@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { Icon } from 'office-ui-fabric-react'
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { Fragment, ReactNode, useEffect, useState } from 'react'
 import { GridCellRenderer, MultiGrid } from 'react-virtualized'
 import styled from 'styled-components'
 import {
@@ -37,8 +37,8 @@ export const useCellRenderer = ({
     refGrid.current?.recomputeGridSize()
   }, [hover])
 
-  const cellRenderer: GridCellRenderer = (cellProps) => {
-    const { columnIndex, rowIndex, key, style } = cellProps
+  const cellRenderer: GridCellRenderer = (gridCellProps) => {
+    const { columnIndex, rowIndex, key, style } = gridCellProps
     const col = cols[columnIndex]
     const row = rows[rowIndex - 1]
     const isSortable = sort && col.isSortable
@@ -58,17 +58,13 @@ export const useCellRenderer = ({
 
     let headerContent
 
-    let align = 'flex-start'
-    if (col.align) align = col.align
-    if (col.align === 'right') align = 'flex-end'
-
     if (col.renderHeader) {
       headerContent = col.renderHeader({ col, colIndex: columnIndex })
     }
     //
     else {
       headerContent = (
-        <DefaultCell key={key} justifyContent={align}>
+        <Fragment>
           {isSortable && (
             <Icon
               iconName={
@@ -81,9 +77,13 @@ export const useCellRenderer = ({
             />
           )}
           {label}
-        </DefaultCell>
+        </Fragment>
       )
     }
+
+    let align = 'flex-start'
+    if (col.align) align = col.align
+    if (col.align === 'right') align = 'flex-end'
 
     if (rowIndex === 0) {
       return (
@@ -93,56 +93,60 @@ export const useCellRenderer = ({
           onClick={() => {
             onClickHeader && onClickHeader({ col, colIndex: columnIndex })
           }}
-          className='header-cell'
+          className={clsx('header-cell', {
+            ['default-render']: !col.renderHeader
+          })}
           data-columnindex={columnIndex}
           data-columnkey={col.key}
           data-issortable={
             col.isSortable === undefined ? 'false' : col.isSortable
           }
+          justifyContent={align}
         >
           {headerContent}
         </HeaderCell>
       )
     } else {
-      let justifyContent = col.align || 'flex-start'
-      if (col.align === 'right') {
-        justifyContent = 'flex-end'
+      const customCellProps = {
+        col,
+        row,
+        colIndex: columnIndex,
+        rowIndex: rowIndex - 1
       }
+
+      const truncateProps = col.truncateProps
+        ? col.truncateProps(customCellProps)
+        : undefined
+
       let toRender: ReactNode = (
-        <DefaultCell justifyContent={justifyContent}>
-          {row[col.key]}
-        </DefaultCell>
+        <Truncate {...truncateProps}>{row[col.key]}</Truncate>
       )
 
       if (col.render) {
-        const customRender = col.render({
-          col,
-          row,
-          colIndex: columnIndex,
-          rowIndex: rowIndex - 1
-        })
+        const customRender = col.render(customCellProps)
         toRender = customRender
       } else if (col.transform) {
         toRender = (
-          <DefaultCell key={key} justifyContent={justifyContent}>
-            {col.transform({
-              col,
-              row,
-              colIndex: columnIndex,
-              rowIndex: rowIndex - 1
-            })}
-          </DefaultCell>
+          <Truncate {...truncateProps}>
+            {col.transform(customCellProps)}
+          </Truncate>
         )
       }
 
       const className = clsx('cell', {
         odd: (rowIndex - 1) % 2 !== 0,
         even: (rowIndex - 1) % 2 === 0,
-        hover: hover.rowIndex === rowIndex
+        hover: hover.rowIndex === rowIndex,
+        ['default-render']: !col.render
       })
+
+      const cellProps = col.cellProps
+        ? col.cellProps(customCellProps)
+        : undefined
 
       return (
         <Cell
+          {...cellProps}
           key={key}
           style={style}
           className={className}
@@ -159,6 +163,7 @@ export const useCellRenderer = ({
             onClickCell &&
             onClickCell({ col, row, colIndex: columnIndex, rowIndex })
           }
+          justifyContent={align}
         >
           {toRender}
         </Cell>
@@ -169,7 +174,7 @@ export const useCellRenderer = ({
   return cellRenderer
 }
 
-const Cell = styled.div`
+const Cell = styled.div<{ justifyContent: string }>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -179,17 +184,19 @@ const Cell = styled.div`
   &.hover {
     background-color: #f3f2f1;
   }
+  &.default-render {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    height: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    justify-content: ${(p) => p.justifyContent};
+  }
 `
 
-export const DefaultCell = styled.div<{ justifyContent: string }>`
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  height: 100%;
-  justify-content: ${(p) => p.justifyContent};
-`
-
-const HeaderCell = styled.div`
+const HeaderCell = styled.div<{ justifyContent: string }>`
   font-size: 14px;
   height: 100%;
   font-weight: 600;
@@ -197,6 +204,13 @@ const HeaderCell = styled.div`
   border-bottom: 1px solid rgb(237, 235, 233);
   user-select: none;
   box-sizing: border-box;
+  &.default-render {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    height: 100%;
+    justify-content: ${(p) => p.justifyContent};
+  }
   &:hover {
     background-color: #f3f2f1;
   }
@@ -213,4 +227,10 @@ const Label = styled.div`
   &.isSortable {
     padding-left: 5px;
   }
+`
+
+const Truncate = styled.div.attrs({ className: 'truncate' })`
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `
