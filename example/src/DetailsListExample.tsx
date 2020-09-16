@@ -232,7 +232,7 @@ const getCols = (
           </CenteredCell>
         )
       },
-      width: 0
+      width: 500
     }
   ]
 
@@ -270,14 +270,12 @@ export const DetailsListExample = () => {
   const { width: windowWidth } = useWindowSize()
   const [rows, setRows] = useState(initRows)
   const [sort, setSort] = useState({ key: 'name', dir: 'asc' })
-  // -100 for 50px padding on the body
-  const [width, setWidth] = useState(windowWidth - 100)
+  const [width, setWidth] = useState(windowWidth)
   const [fixedCols, setFixedCols] = useState(2)
   const { addToast } = useToasts()
   const [isLoading, setIsLoading] = useState(false)
   const [noData, setNoData] = useState(false)
-
-  const cols = getCols(rows, setRows, addToast)
+  const [cols, setCols] = useState(getCols(rows, setRows, addToast))
 
   useEffect(() => {
     if (noData) {
@@ -324,8 +322,7 @@ export const DetailsListExample = () => {
             value={width}
             step={10}
             min={300}
-            // -100 for 50px padding on the body
-            max={windowWidth - 100}
+            max={windowWidth}
             onChange={(value) => {
               setWidth(value)
             }}
@@ -372,15 +369,7 @@ export const DetailsListExample = () => {
         rows={rows}
         columnCount={cols.length}
         rowCount={rows.length}
-        columnWidth={({ index }: any) => {
-          if (cols[index].key === 'filler') {
-            return Math.max(
-              0,
-              cols.reduce((sum, c) => sum + c.width, 0)
-            )
-          }
-          return cols[index].width
-        }}
+        columnWidth={({ index }: any) => cols[index].width}
         fixedColumnCount={fixedCols}
         height={500}
         width={width}
@@ -415,6 +404,19 @@ export const DetailsListExample = () => {
         }}
         isLoading={isLoading}
         noDataMessage='No data to show'
+        onResizeCol={({ col, x }: any) => {
+          setCols(
+            cols.map((c) => {
+              if (c.key === col.key) {
+                return {
+                  ...c,
+                  width: c.width + x
+                }
+              }
+              return c
+            })
+          )
+        }}
       />
       {createPortal(
         <ReactTooltip id='tooltip' effect='solid' />,

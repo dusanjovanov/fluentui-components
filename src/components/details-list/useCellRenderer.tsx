@@ -1,12 +1,12 @@
 import clsx from 'clsx'
-import { Icon } from 'office-ui-fabric-react'
-import React, { Fragment, ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { GridCellRenderer, MultiGrid } from 'react-virtualized'
 import styled from 'styled-components'
+import { HeaderCell } from './HeaderCell'
 import {
   DetailsListColumn,
-  DetailsListProps,
-  DetailsListHoverState
+  DetailsListHoverState,
+  DetailsListProps
 } from './types'
 
 type Props = {
@@ -16,6 +16,7 @@ type Props = {
   onClickHeader: DetailsListProps['onClickHeader']
   onClickCell: DetailsListProps['onClickCell']
   refGrid: React.MutableRefObject<MultiGrid | null | undefined>
+  onResizeCol?: DetailsListProps['onResizeCol']
 }
 
 export const useCellRenderer = ({
@@ -24,7 +25,8 @@ export const useCellRenderer = ({
   sort,
   onClickHeader,
   onClickCell,
-  refGrid
+  refGrid,
+  onResizeCol
 }: Props) => {
   const [hover, setHover] = useState<DetailsListHoverState>({
     col: null,
@@ -41,45 +43,6 @@ export const useCellRenderer = ({
     const { columnIndex, rowIndex, key, style } = gridCellProps
     const col = cols[columnIndex]
     const row = rows[rowIndex - 1]
-    const isSortable = sort && col.isSortable
-
-    let label: ReactNode
-
-    if (col.renderLabel) {
-      label = col.renderLabel({ col, colIndex: columnIndex })
-    }
-    //
-    else {
-      label =
-        col.label.length > 0 ? (
-          <Label className={clsx({ isSortable })}>{col.label}</Label>
-        ) : null
-    }
-
-    let headerContent
-
-    if (col.renderHeader) {
-      headerContent = col.renderHeader({ col, colIndex: columnIndex })
-    }
-    //
-    else {
-      headerContent = (
-        <Fragment>
-          {isSortable && (
-            <Icon
-              iconName={
-                sort!.key === col.key
-                  ? sort!.dir === 'asc'
-                    ? 'SortUp'
-                    : 'SortDown'
-                  : 'Sort'
-              }
-            />
-          )}
-          {label}
-        </Fragment>
-      )
-    }
 
     let align = 'flex-start'
     if (col.align) align = col.align
@@ -89,22 +52,13 @@ export const useCellRenderer = ({
       return (
         <HeaderCell
           key={key}
-          style={style}
-          onClick={() => {
-            onClickHeader && onClickHeader({ col, colIndex: columnIndex })
-          }}
-          className={clsx('header-cell', {
-            ['default-render']: !col.renderHeader
-          })}
-          data-columnindex={columnIndex}
-          data-columnkey={col.key}
-          data-issortable={
-            col.isSortable === undefined ? 'false' : col.isSortable
-          }
-          justifyContent={align}
-        >
-          {headerContent}
-        </HeaderCell>
+          col={col}
+          sort={sort}
+          onClickHeader={onClickHeader}
+          gridCellProps={gridCellProps}
+          columnIndex={columnIndex}
+          onResizeCol={onResizeCol}
+        />
       )
     } else {
       const customCellProps = {
@@ -196,41 +150,35 @@ const Cell = styled.div<{ justifyContent: string }>`
   }
 `
 
-const HeaderCell = styled.div<{ justifyContent: string }>`
-  font-size: 14px;
-  height: 100%;
-  font-weight: 600;
-  border-top: 1px solid rgb(237, 235, 233);
-  border-bottom: 1px solid rgb(237, 235, 233);
-  user-select: none;
-  box-sizing: border-box;
-  &.default-render {
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-    height: 100%;
-    justify-content: ${(p) => p.justifyContent};
-  }
-  &:hover {
-    background-color: #f3f2f1;
-  }
-  &:focus {
-    outline: none;
-  }
-`
-
-const Label = styled.div`
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  padding-left: 0;
-  &.isSortable {
-    padding-left: 5px;
-  }
-`
-
 const Truncate = styled.div.attrs({ className: 'truncate' })`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 `
+
+// const Line = styled.div`
+//   width: 2px;
+//   height: 100%;
+//   background-color: transparent;
+// `
+
+// const Resizer = styled.div`
+//   width: 16px;
+//   height: 100%;
+//   position: absolute;
+//   right: -8px;
+//   z-index: 2;
+//   cursor: col-resize;
+//   display: flex;
+//   justify-content: center;
+//   &:hover {
+//     ${Line} {
+//       background-color: #0078d4;
+//     }
+//   }
+//   &.react-draggable-dragging {
+//     ${Line} {
+//       background-color: #0078d4;
+//     }
+//   }
+// `

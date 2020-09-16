@@ -5,6 +5,7 @@ import {
   MultiGrid,
   Index
 } from 'react-virtualized'
+import { DraggableData } from 'react-draggable'
 
 export type DetailsListColumn = {
   label: string
@@ -53,6 +54,12 @@ export type DetailsListProps = {
   columnWidth: number | ((params: Index) => number)
   isLoading?: boolean
   noDataMessage?: string
+  onResizeCol?: (props: {
+    col: DetailsListColumn
+    colIndex: number
+    x: number
+    y: number
+  }) => void
 } & Partial<MultiGridProps>
 
 export type DetailsListHoverState = {

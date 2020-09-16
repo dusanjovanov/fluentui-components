@@ -1,7 +1,10 @@
 import { Spinner } from 'office-ui-fabric-react'
-import React, { Fragment, useEffect, useRef } from 'react'
-import { AutoSizer, MultiGrid } from 'react-virtualized'
+import React, { useEffect, useRef } from 'react'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { MultiGrid } from 'react-virtualized'
 import styled from 'styled-components'
+import { CustomDragLayer } from './CustomDragLayer'
+import { DndCustomProvider } from './DndCustomProvider'
 import { DetailsListProps } from './types'
 import { useCellRenderer } from './useCellRenderer'
 
@@ -9,6 +12,7 @@ export const DetailsList = ({
   cols,
   rows,
   width,
+  height,
   sort,
   onClickHeader,
   onClickCell,
@@ -18,6 +22,7 @@ export const DetailsList = ({
   id,
   isLoading,
   noDataMessage,
+  onResizeCol,
   ...props
 }: DetailsListProps) => {
   const refGrid = useRef<MultiGrid | null>()
@@ -28,7 +33,8 @@ export const DetailsList = ({
     onClickHeader,
     sort,
     onClickCell,
-    refGrid
+    refGrid,
+    onResizeCol
   })
 
   useEffect(() => {
@@ -37,46 +43,48 @@ export const DetailsList = ({
     refGrid.current.forceUpdateGrids()
   }, [width])
 
+  useEffect(() => {
+    if (!refGrid.current) return
+    refGrid.current.recomputeGridSize()
+    refGrid.current.forceUpdateGrids()
+  }, [cols])
+
   return (
-    <Fragment>
-      <AutoSizer>
-        {() => (
-          <MultiGrid
-            {...props}
-            ref={(ref) => {
-              refGrid.current = ref
-              if (refMultiGrid) {
-                refMultiGrid(ref)
-              }
-            }}
-            id={id}
-            width={width}
-            columnCount={cols.length}
-            rowCount={rows.length + 1}
-            rowHeight={42}
-            fixedRowCount={1}
-            enableFixedColumnScroll
-            hideBottomLeftGridScrollbar
-            cellRenderer={cellRenderer}
-            classNameTopLeftGrid='dl-top-left-grid'
-            classNameTopRightGrid='dl-top-right-grid'
-            classNameBottomRightGrid='dl-bottom-right-grid'
-            classNameBottomLeftGrid='dl-bottom-left-grid'
-            noContentRenderer={() => {
-              if (isLoading) {
-                return <StyledSpinner />
-              }
-              if (!isLoading) {
-                return <NoRowsMessage>{noDataMessage}</NoRowsMessage>
-              }
-              return null
-            }}
-          >
-            <h1>asdasdasd</h1>
-          </MultiGrid>
-        )}
-      </AutoSizer>
-    </Fragment>
+    <DndCustomProvider backend={HTML5Backend}>
+      <MultiGrid
+        {...props}
+        ref={(ref) => {
+          refGrid.current = ref
+          if (refMultiGrid) {
+            refMultiGrid(ref)
+          }
+        }}
+        id={id}
+        width={width}
+        height={height}
+        columnCount={cols.length}
+        rowCount={rows.length + 1}
+        rowHeight={42}
+        fixedRowCount={1}
+        enableFixedColumnScroll
+        hideBottomLeftGridScrollbar
+        cellRenderer={cellRenderer}
+        classNameTopLeftGrid='dl-top-left-grid'
+        classNameTopRightGrid='dl-top-right-grid'
+        classNameBottomRightGrid='dl-bottom-right-grid'
+        classNameBottomLeftGrid='dl-bottom-left-grid'
+        noContentRenderer={() => {
+          if (isLoading) {
+            return <StyledSpinner />
+          }
+          if (!isLoading) {
+            return <NoRowsMessage>{noDataMessage}</NoRowsMessage>
+          }
+          return null
+        }}
+      />
+      <CustomDragLayer />
+    </DndCustomProvider>
   )
 }
 
