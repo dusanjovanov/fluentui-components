@@ -1,10 +1,9 @@
 import { Spinner } from 'office-ui-fabric-react'
 import React, { useEffect, useRef } from 'react'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 import { MultiGrid } from 'react-virtualized'
 import styled from 'styled-components'
 import { CustomDragLayer } from './CustomDragLayer'
-import { DndCustomProvider } from './DndCustomProvider'
+import DragAndDrop from './DragAndDrop'
 import { DetailsListProps } from './types'
 import { useCellRenderer } from './useCellRenderer'
 
@@ -50,7 +49,7 @@ export const DetailsList = ({
   }, [cols])
 
   return (
-    <DndCustomProvider backend={HTML5Backend}>
+    <DragAndDrop>
       <MultiGrid
         {...props}
         ref={(ref) => {
@@ -84,7 +83,7 @@ export const DetailsList = ({
         }}
       />
       <CustomDragLayer />
-    </DndCustomProvider>
+    </DragAndDrop>
   )
 }
 
