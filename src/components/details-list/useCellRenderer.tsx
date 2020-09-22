@@ -72,9 +72,9 @@ export const useCellRenderer = ({
         ? col.truncateProps(customCellProps)
         : undefined
 
-      let toRender: ReactNode = (
+      let toRender: ReactNode = row ? (
         <Truncate {...truncateProps}>{row[col.key]}</Truncate>
-      )
+      ) : null
 
       if (col.render) {
         const customRender = col.render(customCellProps)
