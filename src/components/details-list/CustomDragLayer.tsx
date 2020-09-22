@@ -7,7 +7,7 @@ export const CustomDragLayer = () => {
   const { clientOffset, isDragging, canDrop } = useDragLayer((monitor) => {
     let canDrop = true
     const item = monitor.getItem()
-    if (item) {
+    if (item && item.col) {
       const colWidth = item.col.width
       const diffClientOffset = monitor.getDifferenceFromInitialOffset()
       if (diffClientOffset) {

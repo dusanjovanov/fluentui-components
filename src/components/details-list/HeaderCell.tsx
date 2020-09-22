@@ -50,7 +50,7 @@ export const HeaderCell = ({
   })
 
   const isSortable = sort && col.isSortable
-  const isResized = item?.col.key === col.key
+  const isResized = item && item.col ? item?.col.key === col.key : false
 
   let label: ReactNode
 
