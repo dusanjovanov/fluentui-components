@@ -12,7 +12,7 @@ export type InfiniteDetailsListProps = DetailsListProps & {
 
 export const InfiniteDetailsList = ({
   loadMoreRows,
-  rowCount = 1000000,
+  rowCount,
   minimumBatchSize,
   threshold,
   ...props
