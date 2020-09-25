@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from 'react'
 import { MultiGrid } from 'react-virtualized'
 import styled from 'styled-components'
 import { CustomDragLayer } from './CustomDragLayer'
-import DragAndDrop from './DragAndDrop'
 import { DetailsListProps } from './types'
 import { useCellRenderer } from './useCellRenderer'
 
@@ -49,7 +48,7 @@ export const DetailsList = ({
   }, [cols])
 
   return (
-    <DragAndDrop>
+    <>
       <MultiGrid
         {...props}
         ref={(ref) => {
@@ -83,7 +82,7 @@ export const DetailsList = ({
         }}
       />
       <CustomDragLayer />
-    </DragAndDrop>
+    </>
   )
 }
 
