@@ -124,7 +124,7 @@ export const DetailsList = ({
 const Root = styled.div`
   position: relative;
   &.isDragging {
-    outline: 1px solid green;
+    /* outline: 1px solid green; */
   }
 `
 
