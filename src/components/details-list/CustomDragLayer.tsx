@@ -1,10 +1,17 @@
 import clsx from 'clsx'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDragLayer } from 'react-dnd'
 import styled from 'styled-components'
+import { dragTypes } from './DetailsList'
 
 export const CustomDragLayer = () => {
-  const { clientOffset, isDragging, canDrop } = useDragLayer((monitor) => {
+  const {
+    clientOffset,
+    initialClientOffset,
+    isDragging,
+    canDrop,
+    item
+  } = useDragLayer((monitor) => {
     let canDrop = true
     const item = monitor.getItem()
     if (item && item.col) {
@@ -17,17 +24,39 @@ export const CustomDragLayer = () => {
     }
     return {
       clientOffset: monitor.getClientOffset(),
+      initialClientOffset: monitor.getInitialClientOffset(),
       isDragging: monitor.isDragging(),
-      canDrop
+      canDrop,
+      item
     }
   })
 
-  if (!isDragging) {
+  let isDraggingColumnResize =
+    isDragging && item && item.type === dragTypes.DETAILS_LIST_COLUMN_RESIZE
+
+  useEffect(() => {
+    if (isDraggingColumnResize) {
+      document.body.style.cursor = 'col-resize'
+    }
+    //
+    else {
+      document.body.style.cursor = 'unset'
+    }
+  }, [isDraggingColumnResize])
+
+  if (!isDraggingColumnResize) {
     return null
+  }
+
+  let firstLineLeft = 0
+
+  if (initialClientOffset && initialClientOffset.x && item && item.col) {
+    firstLineLeft = initialClientOffset.x - item.col.width
   }
 
   return (
     <Root>
+      <Line style={{ left: firstLineLeft }} />
       <Line
         style={{ left: clientOffset?.x }}
         className={clsx({ cantDrop: !canDrop })}
@@ -37,7 +66,7 @@ export const CustomDragLayer = () => {
 }
 
 const Root = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;

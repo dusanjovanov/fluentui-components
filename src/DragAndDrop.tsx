@@ -16,7 +16,7 @@ function useDNDProviderElement({ children }: { children: ReactNode }) {
   )
 }
 
-export default function DragAndDrop(props: any) {
+export function DragAndDrop(props: any) {
   const DNDElement = useDNDProviderElement(props)
   return <Fragment>{DNDElement}</Fragment>
 }

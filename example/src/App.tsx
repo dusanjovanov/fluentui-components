@@ -5,10 +5,11 @@ import { FluentReactSelectAsyncExample } from './FluentReactSelectAsyncExample'
 import { FluentReactSelectExample } from './FluentReactSelectExample'
 import { InfiniteDetailsListExample } from './InfiniteDetailsListExample'
 import { CheckboxDropdownExample } from './CheckboxDropdownExample'
+import { DragAndDrop } from 'fluentui-components'
 
 const App = () => {
   return (
-    <>
+    <DragAndDrop>
       <Pivot>
         <PivotItem headerText='React Select'>
           <FluentReactSelectExample />
@@ -28,7 +29,7 @@ const App = () => {
           </Pivot>
         </PivotItem>
       </Pivot>
-    </>
+    </DragAndDrop>
   )
 }
 

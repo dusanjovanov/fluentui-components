@@ -4,6 +4,7 @@ import { useDrag } from 'react-dnd'
 import { getEmptyImage } from 'react-dnd-html5-backend'
 import styled from 'styled-components'
 import { DetailsListColumn } from './types'
+import { dragTypes } from './DetailsList'
 
 type Props = {
   col: DetailsListColumn
@@ -12,7 +13,7 @@ type Props = {
 
 export const ResizeHandle = ({ col, colIndex }: Props) => {
   const [{ isDragging }, dragRef, preview] = useDrag({
-    item: { type: 'RESIZE', col, colIndex },
+    item: { type: dragTypes.DETAILS_LIST_COLUMN_RESIZE, col, colIndex },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
       sourceClientOffset: monitor.getSourceClientOffset(),

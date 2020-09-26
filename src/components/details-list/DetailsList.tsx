@@ -1,10 +1,16 @@
+import clsx from 'clsx'
 import { Spinner } from 'office-ui-fabric-react'
-import React, { Fragment, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
+import { useDrop } from 'react-dnd'
 import { MultiGrid } from 'react-virtualized'
 import styled from 'styled-components'
 import { CustomDragLayer } from './CustomDragLayer'
 import { DetailsListProps } from './types'
 import { useCellRenderer } from './useCellRenderer'
+
+export const dragTypes = {
+  DETAILS_LIST_COLUMN_RESIZE: 'DETAILS_LIST_COLUMN_RESIZE'
+}
 
 export const DetailsList = ({
   cols,
@@ -24,6 +30,30 @@ export const DetailsList = ({
   ...props
 }: DetailsListProps) => {
   const refGrid = useRef<MultiGrid | null>()
+  const [{ item }, drop] = useDrop({
+    canDrop: (item: any, monitor) => {
+      const colWidth = item.col.width
+      const diffClientOffset = monitor.getDifferenceFromInitialOffset()
+      if (!diffClientOffset) return true
+      const newWidth = colWidth + diffClientOffset.x
+      if (newWidth < 20) return false
+      return true
+    },
+    accept: dragTypes.DETAILS_LIST_COLUMN_RESIZE,
+    collect: (monitor) => {
+      return {
+        item: monitor.getItem()
+      }
+    },
+    drop: (item: any, monitor) => {
+      const diffOffset = monitor.getDifferenceFromInitialOffset()
+      if (!diffOffset) return
+      onResizeCol &&
+        onResizeCol({ col: item.col, colIndex: item.colIndex, ...diffOffset })
+    }
+  })
+
+  const isDragging = item && item.type === dragTypes.DETAILS_LIST_COLUMN_RESIZE
 
   const cellRenderer = useCellRenderer({
     cols,
@@ -48,7 +78,12 @@ export const DetailsList = ({
   }, [cols])
 
   return (
-    <Fragment>
+    <Root
+      ref={drop}
+      className={clsx({
+        isDragging
+      })}
+    >
       <MultiGrid
         {...props}
         ref={(ref) => {
@@ -82,9 +117,16 @@ export const DetailsList = ({
         }}
       />
       <CustomDragLayer />
-    </Fragment>
+    </Root>
   )
 }
+
+const Root = styled.div`
+  position: relative;
+  &.isDragging {
+    outline: 1px solid green;
+  }
+`
 
 const StyledSpinner = styled(Spinner)`
   top: 50%;

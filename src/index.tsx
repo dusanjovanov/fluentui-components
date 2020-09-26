@@ -9,6 +9,7 @@ import {
 } from './components/details-list/types'
 import { CheckboxDropdown } from './components/checkbox-dropdown/CheckboxDropdown'
 import FluentReactSelect from './components/fluent-react-select'
+import { DragAndDrop } from './DragAndDrop'
 
 initializeIcons()
 
@@ -20,5 +21,6 @@ export {
   DetailsListSortProp,
   DetailsListCustomCellProps,
   CheckboxDropdown,
-  FluentReactSelect
+  FluentReactSelect,
+  DragAndDrop
 }

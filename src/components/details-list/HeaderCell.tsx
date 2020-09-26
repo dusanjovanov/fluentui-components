@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import { Icon } from 'office-ui-fabric-react'
 import React, { Fragment, ReactNode } from 'react'
-import { useDrop } from 'react-dnd'
 import { GridCellProps } from 'react-virtualized'
 import styled from 'styled-components'
 import { ResizeHandle } from './ResizeHandle'
@@ -26,31 +25,7 @@ export const HeaderCell = ({
 }: Props) => {
   const { style, key } = gridCellProps
 
-  const [{ item }, drop] = useDrop({
-    canDrop: (item: any, monitor) => {
-      const colWidth = item.col.width
-      const diffClientOffset = monitor.getDifferenceFromInitialOffset()
-      if (!diffClientOffset) return true
-      const newWidth = colWidth + diffClientOffset.x
-      if (newWidth < 20) return false
-      return true
-    },
-    accept: 'RESIZE',
-    collect: (monitor) => {
-      return {
-        item: monitor.getItem()
-      }
-    },
-    drop: (item: any, monitor) => {
-      const diffOffset = monitor.getDifferenceFromInitialOffset()
-      if (!diffOffset) return
-      onResizeCol &&
-        onResizeCol({ col: item.col, colIndex: item.colIndex, ...diffOffset })
-    }
-  })
-
   const isSortable = sort && col.isSortable
-  const isResized = item && item.col ? item?.col.key === col.key : false
 
   let label: ReactNode
 
@@ -102,15 +77,12 @@ export const HeaderCell = ({
         onClickHeader && onClickHeader({ col, colIndex: columnIndex })
       }}
       className={clsx('header-cell', {
-        ['default-render']: !col.renderHeader,
-        isDragging: !!item,
-        isResized
+        ['default-render']: !col.renderHeader
       })}
       data-columnindex={columnIndex}
       data-columnkey={col.key}
       data-issortable={col.isSortable === undefined ? 'false' : col.isSortable}
       justifyContent={align}
-      ref={drop}
     >
       {headerContent}
       {onResizeCol && <ResizeHandle col={col} colIndex={columnIndex} />}
@@ -160,26 +132,3 @@ const Label = styled.div`
     padding-left: 5px;
   }
 `
-
-{
-  /* <Draggable
-        axis='x'
-        onStop={(_, data) => {
-          onResizeCol &&
-            onResizeCol({
-              col,
-              colIndex: columnIndex,
-              dragData: { ...data }
-            })
-        }}
-        position={{
-          x: 0,
-          y: 0
-        }}
-        enableUserSelectHack
-      >
-        <Resizer onClick={(e) => e.stopPropagation()}>
-          <Line />
-        </Resizer>
-      </Draggable> */
-}
