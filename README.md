@@ -44,18 +44,13 @@ A dropdown with a checkbox list that is optionally searchable. Can be used to fi
 Props to pass to a `react-select` `Select` component. It styles the `Select` in FluentUI's style. <br />
 If you want to pass additional custom styles to `Select` you can do so like this:
 
-```
-    import Select, {mergeStyles} from 'react-select'
+```javascript
+import Select, { mergeStyles } from 'react-select'
 
-    <Select
-       styles={
-           mergeStyles(
-               FluentReactSelect.styles,
-               yourStyles
-           )
-       }
-       {...FluentReactSelect}
-     />
+;<Select
+  styles={mergeStyles(FluentReactSelect.styles, yourStyles)}
+  {...FluentReactSelect}
+/>
 ```
 
 ### Select and AsyncSelect - Recommended
@@ -63,7 +58,7 @@ If you want to pass additional custom styles to `Select` you can do so like this
 Standalone Select and AsyncSelect components with FluentReactSelect styles,theme and components props automatically merged with your own.
 Your props override the FluentReactSelect ones.
 
-```
+```javascript
   import {Select} from 'fluentui-components'
 
     <Select
