@@ -42,15 +42,7 @@ const MultiValueRemoveIconButton = styled(IconButton)`
 const theme: Props['theme'] = (theme) => {
   return {
     ...theme,
-    borderRadius: 2,
-    colors: {
-      ...theme.colors,
-      primary50: '#f2f2f2',
-      primary25: '#f3f2f1',
-      primary: '#edebe9',
-      neutral30: '#323130',
-      neutral20: '#8a8886'
-    }
+    borderRadius: 2
   }
 }
 
@@ -90,7 +82,7 @@ const styles: Props['styles'] = {
       outline: s.isFocused && !s.menuIsOpen ? `2px solid #0078d4` : 'none',
       outlineOffset: -1,
       '&:hover': {
-        borderColor: '#605e5c'
+        borderColor: '#323130'
       }
     }
   },
@@ -143,13 +135,17 @@ const styles: Props['styles'] = {
       }
     }
   },
-  option: (p) => {
+  option: (p, s) => {
+    console.log(s)
     return {
       ...p,
       fontSize: 14,
-      color: '#323130',
+      color: s.isDisabled ? '#a19f9d' : '#323130',
+      outline: s.isFocused ? '1px solid #605e5c' : '',
+      outlineOffset: -1,
+      backgroundColor: getBackground(s),
       '&:hover': {
-        backgroundColor: '#f3f2f1'
+        backgroundColor: getHoverBackground(s)
       }
     }
   },
@@ -171,6 +167,42 @@ const styles: Props['styles'] = {
       fontSize: 14
     }
   }
+}
+
+const getBackground = (s: any) => {
+  const { isDisabled, isSelected } = s
+
+  let backgroundColor = 'transparent'
+
+  if (isSelected) {
+    backgroundColor = '#edebe9'
+    return backgroundColor
+  }
+
+  if (isDisabled) {
+    backgroundColor = 'transparent'
+    return backgroundColor
+  }
+
+  return backgroundColor
+}
+
+const getHoverBackground = (s: any) => {
+  const { isDisabled, isSelected } = s
+
+  let backgroundColor = '#f3f2f1'
+
+  if (isSelected) {
+    backgroundColor = '#edebe9'
+    return backgroundColor
+  }
+
+  if (isDisabled) {
+    backgroundColor = 'transparent'
+    return backgroundColor
+  }
+
+  return backgroundColor
 }
 
 export default { styles, theme, components }

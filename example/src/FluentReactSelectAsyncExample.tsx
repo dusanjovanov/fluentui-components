@@ -1,7 +1,7 @@
 import faker from 'faker'
-import { FluentReactSelect } from 'fluentui-components'
+import { FluentReactSelect, AsyncSelect } from 'fluentui-components'
 import React, { useState } from 'react'
-import AsyncSelect from 'react-select/async'
+import ReactAsyncSelect from 'react-select/async'
 import styled from 'styled-components'
 
 const options = Array(100)
@@ -16,7 +16,30 @@ export const FluentReactSelectAsyncExample = () => {
 
   return (
     <Root>
-      <h1>Fluent React Select Async</h1>
+      <h1>Async select</h1>
+      <h2>With FluentReactSelect props</h2>
+      <SelectContainer>
+        <ReactAsyncSelect
+          loadOptions={async (input) => {
+            return await new Promise((r) => {
+              setTimeout(() => {
+                r(
+                  options.filter((o) => {
+                    return (
+                      o.label.toLowerCase().indexOf(input.toLowerCase()) !== -1
+                    )
+                  })
+                )
+              }, 500)
+            })
+          }}
+          value={value}
+          onChange={(value) => setValue(value)}
+          isClearable
+          {...FluentReactSelect}
+        />
+      </SelectContainer>
+      <h2>Standalone component</h2>
       <SelectContainer>
         <AsyncSelect
           loadOptions={async (input) => {
@@ -35,7 +58,6 @@ export const FluentReactSelectAsyncExample = () => {
           value={value}
           onChange={(value) => setValue(value)}
           isClearable
-          {...FluentReactSelect}
         />
       </SelectContainer>
     </Root>

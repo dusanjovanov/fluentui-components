@@ -10,6 +10,8 @@ import {
 import { CheckboxDropdown } from './components/checkbox-dropdown/CheckboxDropdown'
 import FluentReactSelect from './components/fluent-react-select'
 import { DragAndDrop } from './DragAndDrop'
+import { Select } from './components/select/Select'
+import { AsyncSelect } from './components/async-select/AsyncSelect'
 
 initializeIcons()
 
@@ -22,5 +24,7 @@ export {
   DetailsListCustomCellProps,
   CheckboxDropdown,
   FluentReactSelect,
-  DragAndDrop
+  DragAndDrop,
+  Select,
+  AsyncSelect
 }

@@ -1,7 +1,7 @@
 import faker from 'faker'
-import { FluentReactSelect } from 'fluentui-components'
+import { FluentReactSelect, Select } from 'fluentui-components'
 import React, { useState, useEffect } from 'react'
-import Select from 'react-select'
+import ReactSelect from 'react-select'
 import styled from 'styled-components'
 import { Checkbox } from 'office-ui-fabric-react'
 
@@ -24,7 +24,8 @@ export const FluentReactSelectExample = () => {
 
   return (
     <Root>
-      <h1>Fluent React Select</h1>
+      <h1>Select</h1>
+      <h2>With FluentReactSelect props</h2>
       <div style={{ display: 'flex' }}>
         <Checkbox
           checked={isMulti}
@@ -39,13 +40,23 @@ export const FluentReactSelectExample = () => {
       </div>
       <br />
       <SelectContainer>
-        <Select
+        <ReactSelect
           options={options}
           value={value}
           onChange={(value) => setValue(value)}
           isClearable
           isMulti={isMulti}
           {...FluentReactSelect}
+        />
+      </SelectContainer>
+      <h2>Standalone component</h2>
+      <SelectContainer>
+        <Select
+          options={options}
+          value={value}
+          onChange={(value) => setValue(value)}
+          isClearable
+          isMulti={isMulti}
         />
       </SelectContainer>
     </Root>

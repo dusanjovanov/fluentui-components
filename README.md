@@ -58,6 +58,30 @@ If you want to pass additional custom styles to `Select` you can do so like this
      />
 ```
 
+### Select and AsyncSelect - Recommended
+
+Standalone Select and AsyncSelect components with FluentReactSelect styles,theme and components props automatically merged with your own.
+Your props override the FluentReactSelect ones.
+
+```
+  import {Select} from 'fluentui-components'
+
+    <Select
+       value={...}
+       onChange={() => ...}
+       options={[]}
+       styles={{
+         control: (p) => {
+           return {
+             ...p,
+             backgroundColor: "red"
+           }
+         }
+       }}
+       ...
+     />
+```
+
 ---
 
 ## Roadmap
