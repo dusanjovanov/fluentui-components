@@ -45,7 +45,7 @@ const [rows, setRows] = useState([...])
   columnCount={cols.length}
   rowCount={rows.length}
   columnWidth={({ index }: any) => cols[index].width}
-  fixedColumnCount={fixedCols}
+  fixedColumnCount={2}
   height={500}
   width={width}
   rowHeight={40}
@@ -114,6 +114,7 @@ If you want to pass additional custom styles to `Select` you can do so like this
 
 ```javascript
 import Select, { mergeStyles } from 'react-select'
+import {FlentReactSelect} from 'fluentui-components'
 
 <Select
   styles={mergeStyles(FluentReactSelect.styles, yourStyles)}
