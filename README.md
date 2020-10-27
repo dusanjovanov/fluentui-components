@@ -24,6 +24,51 @@ yarn add fluentui-components
 
 It's `react-virtualized`'s MultiGrid styled like FluentUI's DetailsList.
 
+```javascript
+import { DetailsList } from 'fluentui-components'
+
+const [cols, setCols] = useState([
+  {
+    key: 'column1',
+    label: 'Column 1',
+    width: 300,
+  }
+  ...
+])
+
+const [rows, setRows] = useState([...])
+
+<DetailsList
+  id='myList'
+  cols={cols}
+  rows={rows}
+  columnCount={cols.length}
+  rowCount={rows.length}
+  columnWidth={({ index }: any) => cols[index].width}
+  fixedColumnCount={fixedCols}
+  height={500}
+  width={width}
+  rowHeight={40}
+  onSectionRendered={() => {
+    // do something when new part of table is rendered
+    // e.g. ReactTooltip.rebuild() if you use react-tooltip library which I recommend
+  }}
+  onClickCell={({ row, col }) => {
+    // do something with cell or row
+  }}
+  sort={sort}
+  onClickHeader={({ col }: any) => {
+    // do something with header cell
+  }}
+  isLoading={isLoading}
+  noDataMessage='No data to show'
+  onResizeCol={({ col, x }: any) => {
+    // update columns state with the new column width
+    // x is actually deltaX 
+  }}
+/>
+```
+
 Features:
 
 - Horizontal scrolling
@@ -34,6 +79,29 @@ Features:
 ### InfiniteDetailsList
 
 Like `DetailsList` but with infinite scroll
+
+```javascript
+import { InfiniteDetailsList } from 'fluentui-components'
+
+<InfiniteDetailsList 
+  ...allStandardDetailsListProps
+  loadRows={async ({startIndex, stopIndex}) => {
+    const skip = startIndex;
+    const top = stopIndex - startIndex;
+    const res = await API.getData(skip, top);
+    // if res.data is an array
+    return res.data;
+  }}
+  // just put an absurdely large number here
+  rowCount={1000000}
+  // if you want to fetch 30 by 30 rows, then you give 31 as min batch size (because we do stopIndex - startIndex to calculate top)
+  // if you wanted 50 by 50 you would put 51 here
+  minimumBatchSize={31}
+  // threshold 15 means when there are 15 rows which are not visible (not yet been scrolled to), call loadRows 
+  threshold={15}
+/>
+
+```
 
 ### CheckboxDropdown
 
@@ -47,10 +115,11 @@ If you want to pass additional custom styles to `Select` you can do so like this
 ```javascript
 import Select, { mergeStyles } from 'react-select'
 
-;<Select
+<Select
   styles={mergeStyles(FluentReactSelect.styles, yourStyles)}
   {...FluentReactSelect}
 />
+
 ```
 
 ### Select and AsyncSelect - Recommended
@@ -59,22 +128,22 @@ Standalone Select and AsyncSelect components with FluentReactSelect styles,theme
 Your props override the FluentReactSelect ones.
 
 ```javascript
-  import {Select} from 'fluentui-components'
+import {Select} from 'fluentui-components'
 
-    <Select
-       value={...}
-       onChange={() => ...}
-       options={[]}
-       styles={{
-         control: (p) => {
-           return {
-             ...p,
-             backgroundColor: "red"
-           }
-         }
-       }}
-       ...
-     />
+<Select
+   value={...}
+   onChange={() => ...}
+   options={[]}
+   styles={{
+     control: (p) => {
+       return {
+         ...p,
+         backgroundColor: "red"
+       }
+     }
+   }}
+   ...
+/>
 ```
 
 ---
@@ -87,7 +156,7 @@ Your props override the FluentReactSelect ones.
 
 ## ⚠️ Note
 
-You have to wrap your app with the `DragAndDrop` component exported from this package. Internally it render `DndProvider` from `react-dnd` package.
+You have to wrap your app with the `DragAndDrop` component exported from this package. Internally it renders `DndProvider` from `react-dnd` package.
 It's used for resizing columns.
 
 ## License
