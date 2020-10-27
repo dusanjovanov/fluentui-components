@@ -90,7 +90,7 @@ Your props override the FluentReactSelect ones.
 - FluentReactSelect: Instead of exporting props to apply to a `Select` component, export the entire component with styles applied already and
   add auto windowing to the dropdown list if the list is larger than say, 300 items.
 
-## Notes
+## ⚠️ Note
 
 You have to wrap your app with the `DragAndDrop` component exported from this package. Internally it render `DndProvider` from `react-dnd` package.
 It's used for resizing columns.
