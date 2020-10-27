@@ -136,7 +136,6 @@ const styles: Props['styles'] = {
     }
   },
   option: (p, s) => {
-    console.log(s)
     return {
       ...p,
       fontSize: 14,
