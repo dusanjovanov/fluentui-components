@@ -145,7 +145,8 @@ const styles: Props['styles'] = {
       outlineOffset: -1,
       backgroundColor: getBackground(s),
       '&:hover': {
-        backgroundColor: getHoverBackground(s)
+        backgroundColor: getHoverBackground(s),
+        outline: "none"
       }
     }
   },
