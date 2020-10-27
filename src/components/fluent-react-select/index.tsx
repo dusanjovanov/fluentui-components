@@ -140,12 +140,10 @@ const styles: Props['styles'] = {
       ...p,
       fontSize: 14,
       color: s.isDisabled ? '#a19f9d' : '#323130',
-      outline: s.isFocused ? '1px solid #605e5c' : '',
-      outlineOffset: -1,
       backgroundColor: getBackground(s),
       '&:hover': {
         backgroundColor: getHoverBackground(s),
-        outline: "none"
+        outline: 'none'
       }
     }
   },
@@ -170,7 +168,7 @@ const styles: Props['styles'] = {
 }
 
 const getBackground = (s: any) => {
-  const { isDisabled, isSelected } = s
+  const { isDisabled, isSelected, isFocused } = s
 
   let backgroundColor = 'transparent'
 
@@ -181,6 +179,11 @@ const getBackground = (s: any) => {
 
   if (isDisabled) {
     backgroundColor = 'transparent'
+    return backgroundColor
+  }
+
+  if (isFocused) {
+    backgroundColor = '#f3f2f1'
     return backgroundColor
   }
 
