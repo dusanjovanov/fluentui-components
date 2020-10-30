@@ -3,7 +3,9 @@ import { mergeStyles } from 'react-select'
 import FluentReactSelect from '../fluent-react-select'
 import AsyncReactSelect, { Props } from 'react-select/async'
 
-export const AsyncSelect = (props: Props<any>) => {
+export const AsyncSelect = (
+  props: Props<{ label: string; value: any; [key: string]: any }>
+) => {
   let mergedStyles = FluentReactSelect.styles
 
   if (props.styles) {
