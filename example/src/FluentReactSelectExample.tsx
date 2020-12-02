@@ -1,6 +1,6 @@
 import faker from 'faker'
 import { FluentReactSelect, Select } from 'fluentui-components'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ReactSelect from 'react-select'
 import styled from 'styled-components'
 import { Checkbox } from 'office-ui-fabric-react'
@@ -15,6 +15,7 @@ const options = Array(100)
 export const FluentReactSelectExample = () => {
   const [value, setValue] = useState<any>([])
   const [isMulti, setIsMulti] = useState(false)
+  const selectRef = useRef<ReactSelect>()
 
   useEffect(() => {
     if (!isMulti) {
@@ -50,6 +51,16 @@ export const FluentReactSelectExample = () => {
         />
       </SelectContainer>
       <h2>Standalone component</h2>
+      <button
+        onClick={() => {
+          if (selectRef.current) {
+            selectRef.current!.focus()
+          }
+        }}
+      >
+        Focus
+      </button>
+      <br /> <br />
       <SelectContainer>
         <Select
           options={options}
@@ -57,6 +68,7 @@ export const FluentReactSelectExample = () => {
           onChange={(value) => setValue(value)}
           isClearable
           isMulti={isMulti}
+          selectRef={selectRef}
         />
       </SelectContainer>
     </Root>

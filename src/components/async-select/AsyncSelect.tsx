@@ -1,11 +1,13 @@
 import React from 'react'
 import { mergeStyles } from 'react-select'
 import FluentReactSelect from '../fluent-react-select'
-import AsyncReactSelect, { Props } from 'react-select/async'
+import AsyncReactSelect, { Props as ReactSelectProps } from 'react-select/async'
 
-export const AsyncSelect = (
-  props: Props<{ label: string; value: any; [key: string]: any }>
-) => {
+type Props = ReactSelectProps<any> & {
+  selectRef?: any
+}
+
+export const AsyncSelect = (props: Props) => {
   let mergedStyles = FluentReactSelect.styles
 
   if (props.styles) {
@@ -46,6 +48,7 @@ export const AsyncSelect = (
         return mergedTheme
       }}
       components={mergedComponents}
+      ref={props.selectRef}
     />
   )
 }

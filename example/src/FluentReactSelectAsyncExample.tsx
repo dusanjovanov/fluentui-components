@@ -1,6 +1,6 @@
 import faker from 'faker'
 import { FluentReactSelect, AsyncSelect } from 'fluentui-components'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import ReactAsyncSelect from 'react-select/async'
 import styled from 'styled-components'
 
@@ -13,6 +13,7 @@ const options = Array(100)
 
 export const FluentReactSelectAsyncExample = () => {
   const [value, setValue] = useState<any>([])
+  const selectRef = useRef<ReactAsyncSelect<any>>()
 
   return (
     <Root>
@@ -40,6 +41,16 @@ export const FluentReactSelectAsyncExample = () => {
         />
       </SelectContainer>
       <h2>Standalone component</h2>
+      <button
+        onClick={() => {
+          if (selectRef.current) {
+            selectRef.current!.focus()
+          }
+        }}
+      >
+        Focus
+      </button>
+      <br /> <br />
       <SelectContainer>
         <AsyncSelect
           loadOptions={async (input) => {
@@ -58,6 +69,7 @@ export const FluentReactSelectAsyncExample = () => {
           value={value}
           onChange={(value) => setValue(value)}
           isClearable
+          selectRef={selectRef}
         />
       </SelectContainer>
     </Root>
